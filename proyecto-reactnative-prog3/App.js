@@ -19,6 +19,11 @@ export default function App() {
         component={ Register }
         options={{headerShown : false}}  
         />
+        <Stack.Screen
+        name='Login'
+        component={ Login }
+        options={{headerShown : false}}  
+        />
 
 
 
