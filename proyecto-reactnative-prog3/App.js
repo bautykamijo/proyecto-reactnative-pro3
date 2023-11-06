@@ -14,7 +14,11 @@ export default function App() {
   
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen />
+        <Stack.Screen
+        name='Register'
+        component={ Register }
+        options={{headerShown : false}}  
+        />
 
 
 

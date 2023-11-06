@@ -55,6 +55,7 @@ class Register extends Component {
                 <TouchableOpacity style={styles.button} onPress={() => this.register(this.state.email, this.state.password)}>
                     <Text style={styles.textButton}>Registrarse</Text>
                 </TouchableOpacity>
+                <Text>Ya tienes cuenta? </Text><TouchableOpacity onPress={ () => this.props.navigation.navigate('Home')}><Text>Ir al Login</Text></TouchableOpacity>
 
             </View>
         )
@@ -65,8 +66,6 @@ class Register extends Component {
 
 const styles = StyleSheet.create({
     formContainer:{
-        display : 'flex',
-        justifyContent : 'center',
         paddingHorizontal:10,
         marginTop: 20,
     },
