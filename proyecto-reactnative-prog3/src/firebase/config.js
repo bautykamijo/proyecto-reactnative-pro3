@@ -2,12 +2,12 @@ import app from 'firebase/app';
 import firebase from 'firebase';
 
 const firebaseConfig = {
-apiKey: "AIzaSyAanl6dJ4UxoByWlKDpRRjYVJb0roxFXg8",
-authDomain: "proyecto-firebase-prog3.firebaseapp.com",
-projectId: "proyecto-firebase-prog3",
-storageBucket: "proyecto-firebase-prog3.appspot.com",
-messagingSenderId: "993411718213",
-appId: "1:993411718213:web:5207c64cb2dba0fd58972c"
+apiKey: "AIzaSyDq0cxg82kr2PBy5qjM1j_R6DQ-1HbywNE",
+authDomain: "proyecto-reactnative-pro3.firebaseapp.com",
+projectId: "proyecto-reactnative-pro3",
+storageBucket: "proyecto-reactnative-pro3.appspot.com",
+messagingSenderId: "823531866293",
+appId: "1:823531866293:web:af751eb9636358281f56fc"
 };
 
 app.initializeApp(firebaseConfig);
