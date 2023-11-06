@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity, TextInput } from "react-native";
+import { Text, View, TouchableOpacity, TextInput, StyleSheet } from "react-native";
 import { auth } from '../firebase/config';
 
 
@@ -17,7 +17,7 @@ class Register extends Component {
     }
 
     register(mail, pass){
-        auth.createUserWithEmailAndPassword(email, pass)
+        auth.createUserWithEmailAndPassword(mail, pass)
          .then( response => {
              this.setState({registered: true});
           })     
@@ -31,26 +31,29 @@ class Register extends Component {
 
     render(){
         return(
-            <View>
+            <View style={styles.formContainer}>
                 <Text>Registrarse</Text>
                 <TextInput
+                style={styles.input}
                 keyboardType='default'
                 placeholder='Username'
                 onChangeText={ text => this.setState({usuario:text}) }
                 value={this.state.usuario} />
                 <TextInput
+                style={styles.input}
                 keyboardType='email-address'
                 placeholder='Email'
                 onChangeText={ text => this.setState({email:text}) }
                 value={this.state.email} />
                 <TextInput
+                style={styles.input}
                 keyboardType='default'
                 placeholder='Password'
                 secureTextEntry={true} 
                 onChangeText={ text => this.setState({password:text}) }
                 value={this.state.password} />
-                <TouchableOpacity onPress={() => this.register(this.state.email, this.state.password)}>
-                    <Text>Resgistrarse</Text>
+                <TouchableOpacity style={styles.button} onPress={() => this.register(this.state.email, this.state.password)}>
+                    <Text style={styles.textButton}>Registrarse</Text>
                 </TouchableOpacity>
 
             </View>
@@ -59,8 +62,45 @@ class Register extends Component {
 
 }
 
-export default Register;
 
 const styles = StyleSheet.create({
+    formContainer:{
+        display : 'flex',
+        justifyContent : 'center',
+        paddingHorizontal:10,
+        marginTop: 20,
+    },
+    input:{
+        color: 'gray',
+        height:20,
+        paddingVertical:15,
+        paddingHorizontal: 10,
+        borderWidth:1,
+        borderColor: '#ccc',
+        borderStyle: 'solid',
+        borderRadius: 6,
+        marginVertical:10,
+    },
+    button:{
+        backgroundColor:'#28a745',
+        paddingHorizontal: 10,
+        paddingVertical: 6,
+        textAlign: 'center',
+        borderRadius:4, 
+        borderWidth:1,
+        borderStyle: 'solid',
+        borderColor: '#28a745'
+    },
+    textButton:{
+        color: '#fff'
+    }
 
 })
+
+
+
+
+export default Register;
+
+
+
