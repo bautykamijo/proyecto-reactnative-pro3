@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import Home from './src/screens/Home';
+import Menu from './src/components/Menu'
 import Register from './src/screens/Register';
 import Login from './src/screens/Login';
 
@@ -23,6 +23,11 @@ export default function App() {
         <Stack.Screen
         name='Login'
         component={ Login }
+        options={{headerShown : false}}  
+        />
+         <Stack.Screen
+        name='Menu'
+        component={ Menu }
         options={{headerShown : false}}  
         />
 
