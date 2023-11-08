@@ -13,7 +13,7 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
   
-    <NavigationContainer>
+    <NavigationContainer styles={styles.container}>
       <Stack.Navigator>
         <Stack.Screen
         name='Register'

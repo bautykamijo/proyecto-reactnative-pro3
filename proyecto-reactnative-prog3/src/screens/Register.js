@@ -11,7 +11,8 @@ class Register extends Component {
             registered : false,
             usuario : '',
             email : '',
-            password : ''
+            password : '',
+            error: ''
 
         }
     }
@@ -70,7 +71,6 @@ const styles = StyleSheet.create({
         marginTop: 20,
     },
     input:{
-        color: 'gray',
         height:20,
         paddingVertical:15,
         paddingHorizontal: 10,
