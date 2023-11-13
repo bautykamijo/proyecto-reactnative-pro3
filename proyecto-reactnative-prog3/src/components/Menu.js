@@ -2,6 +2,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React, { Component } from "react";
 import { TextInput, TouchableOpacity, View, Text, StyleSheet, FlatList } from "react-native";
 
+
 import Home from "../screens/Home";
 import PostForm from "../screens/PostForm";
 import User from "../screens/User";
