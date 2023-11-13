@@ -7,10 +7,13 @@ import { auth, db } from "../firebase/config";
 
 
 class PostForm extends Component {
-  constructor() {
-    super();
-    this.state = { post: "", showCamera: true, url: ''};
-  }
+
+  constructor(props) {
+    super(props);
+    this.state = { post: "",
+                   showCamera: true, 
+                   url: ''}
+    }
 
 
   postear(){
@@ -21,7 +24,9 @@ class PostForm extends Component {
         likes: [],
         createdAt: Date.now()
     })
-    .then( console.log("Posteaste correctamente"))
+    .then(
+      this.props.navigation.navigate("Home")
+     )
     .catch(error => console.log(`El error fue: ${error}`))
   }
 
@@ -32,7 +37,6 @@ class PostForm extends Component {
   render() {
     return (
       <View>
-        <Text>PostForm</Text>
 
         {this.state.showCamera ? <MyCamera onImageUpload={(url) => this.onImageUpload(url)} /> : 
 
@@ -41,14 +45,13 @@ class PostForm extends Component {
         <TextInput
           style={styles.input}
           onChangeText={(text) => this.setState({ post: text })}
-          placeholder="Escribe un post"
+          placeholder="Escribe tu mensaje aqui..."
           keyboardType="default"
           value={this.state.post}
         />
         <TouchableOpacity
           style={styles.button}
-          onPress={() => this.postear()}
-        >
+          onPress={() => this.postear()}>
           <Text style={styles.textButton}>Postear</Text>
         </TouchableOpacity>
         </> }
@@ -72,7 +75,7 @@ const styles = StyleSheet.create({
       marginVertical: 10,
     },
     button: {
-      backgroundColor: "red",
+      backgroundColor: "blue",
       paddingHorizontal: 10,
       paddingVertical: 6,
       textAlign: "center",

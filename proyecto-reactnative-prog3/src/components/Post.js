@@ -11,7 +11,8 @@ class Post extends Component {
             like: false,
         }}
 
-        componentDidMount(){
+
+    componentDidMount(){
         let likes = this.props.infoPost.datos.likes
 
         if(likes.length === 0){
@@ -27,31 +28,47 @@ class Post extends Component {
         }
 
 
-        render(){
-
-            return(
-                <View style={styles.formContainer}>
-                    <Text>----------------------------------------------------</Text>
-                    <Text>Datos del Post</Text>
-                    <Text>{this.props.infoPost.datos.owner}</Text>
-                    <Text>Texto: {this.props.infoPost.datos.post}</Text>
-                   {/* <Image style={styles.camera} source={{uri:this.props.infoPost.datos.photo }}/> */}
-                    <Text>Likes: {this.props.infoPost.datos.likes.length}</Text>
+    likear(){
+        db.collection("posts").doc(this.props.infoPost.id).update({
+            likes: firebase.firestore.FieldValue.arrayUnion(auth.currentUser.email)
+        })
+        .then(this.setState({like: true}))
+        }
     
-                    {/* If ternario */}
-                    {this.state.like ? 
-                    <TouchableOpacity style={styles.button} onPress={()=>this.dislike()}>
-                        <Text style={styles.textButton} >Dislike</Text>
-                        
-                    </TouchableOpacity>
-                    :
-                    <TouchableOpacity style={styles.button} onPress={()=>this.likear()}>
-                        <Text style={styles.textButton} >Like</Text>
-                    </TouchableOpacity>
-                    }
+
+    dislikear(){
+        db.collection("posts").doc(this.props.infoPost.id).update({
+            likes: firebase.firestore.FieldValue.arrayRemove(auth.currentUser.email)
+        })
+        .then(this.setState({like: false}))
+        }
+
+
+    render(){
+
+        return(
+            <View style={styles.formContainer}>
+                <Text>----------------------------------------------------</Text>
+                <Text>Datos del Post</Text>
+                <Text>{this.props.infoPost.datos.owner}</Text>
+                <Text>Texto: {this.props.infoPost.datos.post}</Text>
+                <Image style={styles.camera} source={{uri:this.props.infoPost.datos.photo }}/> 
+                <Text>Likes: {this.props.infoPost.datos.likes.length}</Text>
+
+               
+                {this.state.like ? 
+                <TouchableOpacity style={styles.button} onPress={()=>this.dislikear()}>
+                    <Text style={styles.textButton} >Dislike</Text>
                     
-                    
-                </View>
+                </TouchableOpacity>
+                :
+                <TouchableOpacity style={styles.button} onPress={()=>this.likear()}>
+                    <Text style={styles.textButton} >Like</Text>
+                </TouchableOpacity>
+                }
+                
+                
+            </View>
             )
         }
 
@@ -64,8 +81,9 @@ class Post extends Component {
 
 const styles = StyleSheet.create({
     formContainer: {
-        height: `60vh`,
-        widht: `100vw`,
+        borderBlockColor : 'black',
+        height: `50vh`,
+        widht: `70vw`,
     },
     camera: {
         widht: '100%',
