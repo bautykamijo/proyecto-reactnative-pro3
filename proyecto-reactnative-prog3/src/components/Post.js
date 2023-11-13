@@ -48,7 +48,6 @@ class Post extends Component {
 
         return(
             <View style={styles.formContainer}>
-                <Text>----------------------------------------------------</Text>
                 <Text>Datos del Post</Text>
                 <Text>{this.props.infoPost.datos.owner}</Text>
                 <Text>Texto: {this.props.infoPost.datos.post}</Text>
@@ -81,12 +80,11 @@ class Post extends Component {
 
 const styles = StyleSheet.create({
     formContainer: {
-        borderBlockColor : 'black',
-        height: `50vh`,
-        widht: `70vw`,
+        height: `60vh`,
+        width: `100vw`,
     },
     camera: {
-        widht: '100%',
+        width: '100%',
         height: '100%',
     },
     input: {

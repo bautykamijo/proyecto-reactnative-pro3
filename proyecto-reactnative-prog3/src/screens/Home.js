@@ -34,20 +34,23 @@ class Home extends Component {
 
             this.setState({
                 listaPost : postsARenderizar
-            })
+        }, ()=>{
+
+            console.log(this.state.listaPost);
+        })
            
            
             }
         )
 
-        console.log(this.state.listaPost);
+        
     }
    
 
     render(){
     return(
-        <View>
-            <Text>Tu lista de posteos</Text>
+        <View style={styles.container}>
+            <Text style={styles.title}>Tu lista de posteos</Text>
 
             {this.state.listaPost.length === 0 ? <Text>Cargando...</Text> :
                     
@@ -59,5 +62,26 @@ class Home extends Component {
         </View>
     )}
 };
+
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: '#282c34', 
+    },
+    title: {
+      fontSize: 25,
+      fontWeight: 'bold',
+      marginBottom: 20,
+      marginTop: 40,
+      marginLeft: 80, 
+      color: '#61dafb',
+     },
+    comp:{
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginLeft: 40, 
+    }
+  })
 
 export default Home;
