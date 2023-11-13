@@ -11,18 +11,10 @@ class Login extends Component {
         };
     }
 
-   /* componentDidMount() {
-        auth.onAuthStateChanged((user) => {
-          if (user) {
-            this.props.navigation.navigate("Menu");
-          }
-        });
-      } */
-
     login (email, pass) {
         auth.signInWithEmailAndPassword(email, pass)
         .then ((response) => {
-            console.log ("Login si", response);
+            console.log ("Login ok", response);
             this.props.navigation.navigate("Menu");
         })
         .catch((error) => {
@@ -64,7 +56,7 @@ class Login extends Component {
 }
 const styles = StyleSheet.create({
     formContainer:{
-        paddingHorizontal:10,
+        paddingHorizontal:600,
         marginTop: 20,
     },
     input:{

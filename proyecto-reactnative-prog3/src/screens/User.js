@@ -9,6 +9,27 @@ class User extends Component {
         this.state = {}
     }
 
+    componentDidMount(){
+        db.collection('posts').where('owner', '==', auth.currentUser.email).onSnapshot(
+            posteos => {
+                let postsARenderizar = [];
+
+                posteos.forEach( onePost => {
+                                postsARenderizar.push(
+                                    {id : onePost.id,
+                                    datos : onePost.data()})})
+
+            this.setState({
+                listaPost : postsARenderizar
+            })
+           
+           
+            }
+        )
+
+        console.log(this.state.listaPost);
+    }
+
     logout() {
         auth.signOut();
         this.props.navigation.navigate ("Login")

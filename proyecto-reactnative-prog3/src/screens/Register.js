@@ -12,11 +12,19 @@ class Register extends Component {
             usuario : '',
             email : '',
             password : '',
-            error: ''
+            error: '',
+            loggedIn: false
 
         }
     }
 
+    componentDidMount() {
+        auth.onAuthStateChanged(user => {
+          if (user) {
+            this.props.navigation.navigate("Menu");
+          }
+        });
+      }
 
     register(mail, pass){
         auth.createUserWithEmailAndPassword(mail, pass)
