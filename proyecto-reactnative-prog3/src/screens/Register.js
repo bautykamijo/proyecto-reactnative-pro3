@@ -14,7 +14,8 @@ class Register extends Component {
             password : '',
             biografia : '',
             error: '',
-            loggedIn: false
+            fotoDePerfil: '',
+            loggedIn: false,
 
         }
     }
@@ -27,26 +28,24 @@ class Register extends Component {
         });
       }
 
-    register(mail, pass){
+    register(mail, pass, userName, biografia){
+       
         auth.createUserWithEmailAndPassword(mail, pass)
          .then( response => {
+            console.log(response);
+            db.collection('users').add({
+                    owner: mail,
+                    createdAt: Date.now(),
+                    userName : userName,
+                    biografia : biografia,
+                    })
+            
              this.setState({registered: true});
           })     
          .catch( error => {
            this.setState({error: 'Fallo en el registro.'})
          })
       }
-
-
-    userDatos(name, bio){
-        db.collection('users').add(
-            {userName : name,
-            biografia : bio,
-            createdAt : Date.now()
-            })
-        .then(console.log('Datos del usuario'))
-        .catch(error => console.log(`El error fue: ${error}`))
-    }
     
 
     render(){
@@ -78,17 +77,23 @@ class Register extends Component {
                 secureTextEntry={true} 
                 onChangeText={ text => this.setState({password:text}) }
                 value={this.state.password} />
-                <TouchableOpacity style={styles.button} onPress={() => {this.register(this.state.email, this.state.password); this.userDatos(this.state.usuario, this.state.biografia);}}>
-                    <Text style={styles.textButton}>Registrarse</Text>
-                </TouchableOpacity>
-                <Text>Ya tienes cuenta? </Text><TouchableOpacity onPress={ () => this.props.navigation.navigate('Login')}><Text>Ir al Login</Text></TouchableOpacity>
+               
+               {!this.state.email || !this.state.password  ? (
+            <TouchableOpacity style={styles.botonDeshabilitado} onPress={() => alert("Debe completar los campos obligatorios")}>
+                <Text style={styles.button}>Registrarse</Text>
+            </TouchableOpacity>
+            ) :(
+            <TouchableOpacity style={styles.textButton} onPress={()=>this.register(this.state.email, this.state.password, this.state.usuario, this.state.biografia )}>
+                <Text style={styles.button}>Registrarse</Text>    
+            </TouchableOpacity> 
+            )}
+
 
             </View>
         )
     }
 
-}
-
+}  
 
 const styles = StyleSheet.create({
     formContainer:{
@@ -117,7 +122,13 @@ const styles = StyleSheet.create({
     },
     textButton:{
         color: '#fff'
-    }
+    },
+    botonDeshabilitado: {
+        backgroundColor: '#7f848e',
+        padding: 15,
+        borderRadius: 5,
+        alignItems: 'center',
+    },
 
 })
 
