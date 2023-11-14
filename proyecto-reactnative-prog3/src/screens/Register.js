@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View, TouchableOpacity, TextInput, StyleSheet } from "react-native";
-import { auth } from '../firebase/config';
+import { auth, db } from '../firebase/config';
 
 
 class Register extends Component {
@@ -12,6 +12,7 @@ class Register extends Component {
             usuario : '',
             email : '',
             password : '',
+            biografia : '',
             error: '',
             loggedIn: false
 
@@ -34,10 +35,19 @@ class Register extends Component {
          .catch( error => {
            this.setState({error: 'Fallo en el registro.'})
          })
-
-         
       }
-     
+
+
+    userDatos(name, bio){
+        db.collection('users').add(
+            {userName : name,
+            biografia : bio,
+            createdAt : Date.now()
+            })
+        .then(console.log('Datos del usuario'))
+        .catch(error => console.log(`El error fue: ${error}`))
+    }
+    
 
     render(){
         return(
@@ -51,6 +61,12 @@ class Register extends Component {
                 value={this.state.usuario} />
                 <TextInput
                 style={styles.input}
+                keyboardType='default'
+                placeholder='Biography'
+                onChangeText={ text => this.setState({biografia:text}) }
+                value={this.state.biografia} />
+                <TextInput
+                style={styles.input}
                 keyboardType='email-address'
                 placeholder='Email'
                 onChangeText={ text => this.setState({email:text}) }
@@ -62,7 +78,7 @@ class Register extends Component {
                 secureTextEntry={true} 
                 onChangeText={ text => this.setState({password:text}) }
                 value={this.state.password} />
-                <TouchableOpacity style={styles.button} onPress={() => this.register(this.state.email, this.state.password)}>
+                <TouchableOpacity style={styles.button} onPress={() => {this.register(this.state.email, this.state.password); this.userDatos(this.state.usuario, this.state.biografia);}}>
                     <Text style={styles.textButton}>Registrarse</Text>
                 </TouchableOpacity>
                 <Text>Ya tienes cuenta? </Text><TouchableOpacity onPress={ () => this.props.navigation.navigate('Login')}><Text>Ir al Login</Text></TouchableOpacity>
