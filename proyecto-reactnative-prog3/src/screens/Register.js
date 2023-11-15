@@ -79,16 +79,19 @@ class Register extends Component {
                 value={this.state.password} />
                
                {!this.state.email || !this.state.password  ? (
-            <TouchableOpacity style={styles.botonDeshabilitado} onPress={() => alert("Debe completar los campos obligatorios")}>
+            <TouchableOpacity style={styles.textButton} onPress={() => alert("Debe completar los campos obligatorios")}>
                 <Text style={styles.button}>Registrarse</Text>
             </TouchableOpacity>
             ) :(
             <TouchableOpacity style={styles.textButton} onPress={()=>this.register(this.state.email, this.state.password, this.state.usuario, this.state.biografia )}>
                 <Text style={styles.button}>Registrarse</Text>    
             </TouchableOpacity> 
+            
             )}
 
-
+        <TouchableOpacity onPress={ () => this.props.navigation.navigate('Login')}>
+            <Text style={styles.irAlogin}>Ya tengo cuenta. Ir al login</Text>
+         </TouchableOpacity>
             </View>
         )
     }
@@ -129,6 +132,14 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         alignItems: 'center',
     },
+   irAlogin: {
+        marginBottom: 10,
+        marginTop: 10,
+        textAlign: "center",
+        fontSize: 15,
+    }
+
+
 
 })
 

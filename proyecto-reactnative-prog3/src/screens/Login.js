@@ -21,6 +21,7 @@ class Login extends Component {
             console.log(error);
         })
     }
+    
 
     render() {
         return (
@@ -41,15 +42,19 @@ class Login extends Component {
                     secureTextEntry={true}
                     value={this.state.password}
                 />
-                <TouchableOpacity
-                    style={styles.button}
-                    onPress={() => this.login(this.state.email, this.state.password)}>
-                <Text style={styles.textButton}>Ingresar</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={() => this.props.navigation.navigate("Register")}>
-                <Text>No tengo cuenta. Registrarme.</Text>
-                </TouchableOpacity>
+                {!this.state.email || !this.state.password  ? (
+            <TouchableOpacity style={styles.textButton} onPress={() => alert("Debe completar los campos obligatorios")}>
+                <Text style={styles.button}>Ingresar</Text>
+            </TouchableOpacity>
+            ) :(
+            <TouchableOpacity style={styles.textButton} onPress={()=>this.login(this.state.email, this.state.password)}>
+                <Text style={styles.button}>Ingresar</Text>    
+            </TouchableOpacity> 
+            
+            )}
+        <TouchableOpacity onPress={ () => this.props.navigation.navigate('Register')}>
+            <Text style={styles.irAregister}>No tengo cuenta. Ir a register</Text>
+         </TouchableOpacity>
             </View>
         )
     }
@@ -81,6 +86,12 @@ const styles = StyleSheet.create({
     },
     textButton:{
         color: '#fff'
+    },
+    irAregister: {
+        marginBottom: 10,
+        marginTop: 10,
+        textAlign: "center",
+        fontSize: 15,
     }
 
 })
