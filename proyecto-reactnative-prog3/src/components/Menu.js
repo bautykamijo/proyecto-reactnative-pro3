@@ -7,6 +7,10 @@ import Home from "../screens/Home";
 import PostForm from "../screens/PostForm";
 import User from "../screens/User";
 
+import { FontAwesome } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons'; 
+
+
 const Tab = createBottomTabNavigator();
 
 class Menu extends Component {
@@ -20,13 +24,16 @@ class Menu extends Component {
     render() {
   
       return (
-          <Tab.Navigator>
-              <Tab.Screen name="Home" component={Home}/>
-              <Tab.Screen name="PostForm" component={PostForm}/>
-              <Tab.Screen name="User" component={User}/>
+          <Tab.Navigator screenOptions={{ tabBarShowLabel: false } }>
+              <Tab.Screen name="Home" component={Home} options={ 
+	 { tabBarIcon: () => <AntDesign name="home" size={24} color="black" />}} />
+              <Tab.Screen name="PostForm" component={PostForm} options={ 
+	 { tabBarIcon: () => <AntDesign name="plussquareo" size={24} color="black" /> }}/>
+              <Tab.Screen name="User" component={User} options={ 
+	 { tabBarIcon: () => <AntDesign name="user" size={24} color="black" /> }} />
           </Tab.Navigator>
       );
     }
-  }
+  } 
   
   export default Menu;

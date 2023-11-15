@@ -10,6 +10,8 @@ class User extends Component {
     }
 
     componentDidMount(){
+
+
         db.collection('posts').where('owner', '==', auth.currentUser.email).onSnapshot(
             posteos => {
                 let postsARenderizar = [];
@@ -26,8 +28,6 @@ class User extends Component {
            
             }
         )
-
-        console.log(this.state.listaPost);
     }
 
     logout() {
