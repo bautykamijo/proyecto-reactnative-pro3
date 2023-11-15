@@ -1,18 +1,30 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity } from "react-native";
+import {
+    TextInput,
+    TouchableOpacity,
+    ActivityIndicator,
+    View,
+    Text,
+    StyleSheet,
+    FlatList 
+  } from "react-native";
 import { auth, db } from "../firebase/config";
+import Post from '../components/Post';
+
 
 class User extends Component {
 
     constructor(props){
         super(props);
-        this.state = {}
+        this.state = {
+            listaPost : []
+        }
     }
 
     componentDidMount(){
 
 
-        db.collection('posts').where('owner', '==', auth.currentUser.email).onSnapshot(
+        db.collection('posts').where('owner', '==', auth.currentUser.email).orderBy('createdAt', 'desc').onSnapshot(
             posteos => {
                 let postsARenderizar = [];
 
@@ -39,11 +51,25 @@ class User extends Component {
 
     render(){
     return(
-        <View>
-            <Text>Nombre de usuario: </Text>
-            <Text>Email: {auth.currentUser.email}</Text>
-            <Text>Mini bio: </Text>
-            <Text>Foto de perfil: </Text>
+        <View style={styles.container}>
+            <Text style={styles.textoBlanco}>Nombre de usuario: </Text>
+            <Text style={styles.textoBlanco}>Email: {auth.currentUser.email}</Text>
+            <Text style={styles.textoBlanco}>Mini bio: </Text>
+            <Text style={styles.textoBlanco}>Foto de perfil: </Text>
+
+         
+            {this.state.listaPost.length === 0 ? 
+                <View>
+                    <ActivityIndicator size='large' color='white' />
+                </View>
+            :
+                    <FlatList 
+                        data= {this.state.listaPost}
+                        keyExtractor={ onePost => onePost.id }
+                        renderItem={ ({item}) => <Post infoPost = { item } /> } />}
+
+             
+
            <TouchableOpacity onPress ={() => this.logout()}>
         
                 <Text>Logout</Text>
@@ -51,5 +77,17 @@ class User extends Component {
         </View>
     )}
 };
+
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      padding : 30,
+      backgroundColor: '#282c34',
+      color : 'white'
+    },
+textoBlanco: {
+    color: 'white',
+    }
+  })
 
 export default User;
