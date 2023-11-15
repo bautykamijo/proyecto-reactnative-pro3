@@ -72,7 +72,7 @@ class Post extends Component {
                     </TouchableOpacity>
                 }
 
-                    <TouchableOpacity style={styles.button} onPress={this.props.navigation.navigate('Comments')}>
+                    <TouchableOpacity style={styles.button} onPress={ () => this.props.navigation.navigate('Comments')}>
                     <Text style={styles.textButton}><FontAwesome5 name="comment" size={24} color="white" /></Text>
                     </TouchableOpacity>
 
