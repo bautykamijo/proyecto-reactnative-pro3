@@ -51,12 +51,10 @@ class Home extends Component {
     render(){
     return(
         <View style={styles.container}>
-            <Text style={styles.title}>Tu lista de posteos</Text>
-
             {this.state.listaPost.length === 0 ? 
 
                 <View>
-                    <ActivityIndicator size='large' color='black' />
+                    <ActivityIndicator size='large' color='white' />
                 </View>
            
             :
@@ -73,8 +71,9 @@ class Home extends Component {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      paddingHorizontal : 10,
-      backgroundColor: '#282c34', 
+      padding : 30,
+      backgroundColor: '#282c34',
+      color : 'white'
     },
   })
 

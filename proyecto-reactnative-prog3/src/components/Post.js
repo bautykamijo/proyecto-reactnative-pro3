@@ -1,8 +1,13 @@
 // Post.js
 import React, { Component } from 'react';
 import { TextInput, TouchableOpacity, View, Text, StyleSheet, FlatList, Image } from 'react-native';
+import { AntDesign } from '@expo/vector-icons'; 
+import { FontAwesome5 } from '@expo/vector-icons'; 
 import { auth, db } from '../firebase/config';
 import firebase from 'firebase';
+
+import User from '../screens/User';
+import Comments from '../screens/Comments';
 
 
 class Post extends Component {
@@ -51,21 +56,29 @@ class Post extends Component {
 
         return(
             <View style={styles.formContainer}>
-                <Text>Datos del Post</Text>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate('User')} style={styles.perfilBox}>
                 <Text>{this.props.infoPost.datos.owner}</Text>
-                <Text>Texto: {this.props.infoPost.datos.post}</Text>
+                </TouchableOpacity>
                 <Image style={styles.camera} source={{ uri: this.props.infoPost.datos.photo }} />
-                <Text>Likes: {this.props.infoPost.datos.likes.length}</Text>
-
+               
+            <View style={styles.likesComments} >
                 {this.state.like ?
                     <TouchableOpacity style={styles.button} onPress={() => this.dislikear()}>
-                        <Text style={styles.textButton}>Dislike</Text>
+                        <Text style={styles.textButton}><AntDesign name="heart" size={24} color="red" /></Text>
                     </TouchableOpacity>
                     :
                     <TouchableOpacity style={styles.button} onPress={() => this.likear()}>
-                        <Text style={styles.textButton}>Like</Text>
+                        <Text style={styles.textButton}><AntDesign name="heart" size={24} color="white" /></Text>
                     </TouchableOpacity>
                 }
+
+                    <TouchableOpacity style={styles.button} onPress={this.props.navigation.navigate('Comments')}>
+                    <Text style={styles.textButton}><FontAwesome5 name="comment" size={24} color="white" /></Text>
+                    </TouchableOpacity>
+
+            </View>
+
+                <Text style={styles.perfilBox}>Likes: {this.props.infoPost.datos.likes.length}</Text>
 
                 <FlatList
                     data={this.state.comments}
@@ -77,20 +90,6 @@ class Post extends Component {
                     )}
                 />
 
-                <TextInput
-                    style={styles.input}
-                    placeholder="Escribe un comentario"
-                    value={this.state.commentText}
-                    onChangeText={this.handleCommentTextChange}
-                />
-
-                <TouchableOpacity style={styles.button} onPress={this.addComment}>
-                    <Text style={styles.textButton}>Comentar</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.button} onPress={this.viewComments}>
-                    <Text style={styles.textButton}>Ver Comentarios</Text>
-                </TouchableOpacity>
             </View>
         );
     }
@@ -98,12 +97,13 @@ class Post extends Component {
 
 const styles = StyleSheet.create({
     formContainer: {
-        height: `60vh`,
-        width: `100vw`,
+        height: 500,
+        backgroundColor: '#282c34',
+        color : 'white'
     },
     camera: {
         width: '100vw',
-        height: 300,
+        height: 350,
         marginVertical : 10
     },
     input: {
@@ -117,19 +117,49 @@ const styles = StyleSheet.create({
         marginVertical: 10,
     },
     button: {
-        backgroundColor: 'salmon',
+        backgroundColor: '#282c34',
         paddingHorizontal: 10,
         paddingVertical: 6,
+        marginTop: 5,
+        marginBottom : 8,
         textAlign: 'center',
         borderRadius: 4,
         borderWidth: 1,
         borderStyle: 'solid',
-        borderColor: 'salmon',
-        width: '30%',
-        marginVertical: 10,
+        borderColor: '#282c34',
+        height : 28,
+        width: 62,
+        display : 'flex',
+        justifyContent: 'left'
     },
     textButton: {
+        textAlign : 'left',
+        fontSize : 18,
         color: '#fff',
+        marginLeft : 10
+    },
+    texto : {
+        fontSize: 14,
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'left',
+        marginBottom: 20,
+        color : 'white'
+
+    },
+    likesComments : {
+        display : 'flex',
+        flexDirection:'row', 
+    },
+    perfilBox : {
+        flex:1,
+        flexDirection:'row',
+        height: 50,
+        width : 100,
+        justifyContent : 'left',
+        marginLeft : 5,
+        marginTop : 15,
+        marginBottom : 35
     },
     commentContainer: {
         marginVertical: 10,

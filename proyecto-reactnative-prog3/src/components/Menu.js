@@ -7,7 +7,6 @@ import Home from "../screens/Home";
 import PostForm from "../screens/PostForm";
 import User from "../screens/User";
 
-import { FontAwesome } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons'; 
 
 
@@ -25,12 +24,22 @@ class Menu extends Component {
   
       return (
           <Tab.Navigator screenOptions={{ tabBarShowLabel: false } }>
-              <Tab.Screen name="Home" component={Home} options={ 
-	 { tabBarIcon: () => <AntDesign name="home" size={24} color="black" />}} />
-              <Tab.Screen name="PostForm" component={PostForm} options={ 
-	 { tabBarIcon: () => <AntDesign name="plussquareo" size={24} color="black" /> }}/>
-              <Tab.Screen name="User" component={User} options={ 
-	 { tabBarIcon: () => <AntDesign name="user" size={24} color="black" /> }} />
+            
+              <Tab.Screen  name="Home" component={Home} options={{
+            headerShown: false,
+            tabBarIcon: () => (
+              <AntDesign name="home" size={24} color='black' />)}} /> 
+
+              <Tab.Screen name="PostForm" component={PostForm} options={{
+            headerShown: false,
+            tabBarIcon: () => (
+              <AntDesign name="plussquareo" size={24} color='black' />)}} /> 
+
+              <Tab.Screen name="User" component={User} options={{
+            headerShown: false,
+            tabBarIcon: () => (
+              <AntDesign name="user" size={24} color='black' />)}} /> 
+
           </Tab.Navigator>
       );
     }
