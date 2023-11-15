@@ -80,12 +80,13 @@ class Post extends Component {
 
 const styles = StyleSheet.create({
     formContainer: {
-        height: `60vh`,
-        width: `100vw`,
+        height: 500,
+        backgroundColor : 'FFCC99'
     },
     camera: {
-        width: '100%',
-        height: '100%',
+        width: '100vw',
+        height: 300,
+        marginVertical : 10
     },
     input: {
       height: 20,

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
     TextInput,
     TouchableOpacity,
+    ActivityIndicator,
     View,
     Text,
     StyleSheet,
@@ -52,7 +53,13 @@ class Home extends Component {
         <View style={styles.container}>
             <Text style={styles.title}>Tu lista de posteos</Text>
 
-            {this.state.listaPost.length === 0 ? <Text>Cargando...</Text> :
+            {this.state.listaPost.length === 0 ? 
+
+                <View>
+                    <ActivityIndicator size='large' color='black' />
+                </View>
+           
+            :
                     
                     <FlatList 
                         data= {this.state.listaPost}
@@ -66,22 +73,9 @@ class Home extends Component {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
+      paddingHorizontal : 10,
       backgroundColor: '#282c34', 
     },
-    title: {
-      fontSize: 25,
-      fontWeight: 'bold',
-      marginBottom: 20,
-      marginTop: 40,
-      marginLeft: 80, 
-      color: '#61dafb',
-     },
-    comp:{
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      marginLeft: 40, 
-    }
   })
 
 export default Home;
