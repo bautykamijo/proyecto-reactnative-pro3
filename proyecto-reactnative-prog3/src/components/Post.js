@@ -56,7 +56,7 @@ class Post extends Component {
 
         return(
             <View style={styles.formContainer}>
-                <TouchableOpacity onPress={() => this.props.navigation.navigate('User')} style={styles.perfilBox}>
+                <TouchableOpacity onPress={ () => this.props.navigation.navigate('User')} style={styles.perfilBox}>
                 <Text>{this.props.infoPost.datos.owner}</Text>
                 </TouchableOpacity>
                 <Image style={styles.camera} source={{ uri: this.props.infoPost.datos.photo }} />
@@ -78,7 +78,8 @@ class Post extends Component {
 
             </View>
 
-                <Text style={styles.perfilBox}>Likes: {this.props.infoPost.datos.likes.length}</Text>
+                <Text style={styles.cantLikes}>Likeado por {this.props.infoPost.datos.likes.length} personas</Text>
+                <Text style={styles.cantLikes}>{this.props.infoPost.datos.post}</Text>
 
                 <FlatList
                     data={this.state.comments}
@@ -99,7 +100,11 @@ const styles = StyleSheet.create({
     formContainer: {
         height: 500,
         backgroundColor: '#282c34',
-        color : 'white'
+        marginTop : 150,
+        color : 'white',
+        borderColor: 'white',
+        borderStyle: 'solid',
+        borderRadius: 6,
     },
     camera: {
         width: '100vw',
@@ -150,6 +155,13 @@ const styles = StyleSheet.create({
     likesComments : {
         display : 'flex',
         flexDirection:'row', 
+    },
+    cantLikes : {
+        display : 'flex',
+        flexDirection:'row', 
+        marginLeft : 5,
+        marginTop : 15,
+        marginBottom : 15
     },
     perfilBox : {
         flex:1,

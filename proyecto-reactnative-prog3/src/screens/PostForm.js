@@ -62,6 +62,7 @@ class PostForm extends Component {
 const styles = StyleSheet.create({
     formContainer: {
       paddingHorizontal: 10,
+      backgroundColor: '#282c34',
       marginTop: 20,
     },
     input: {
