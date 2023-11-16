@@ -84,6 +84,7 @@ class Buscador extends Component {
                         onPress={() => this.buscarUsers()}>
                     <FontAwesome name="search" size={28} color="white" />
                 </TouchableOpacity>
+                </View>
 
                 {this.state.error ? (<Text style={styles.blanco}>{this.state.error}</Text>
                 
@@ -95,7 +96,7 @@ class Buscador extends Component {
                                 renderItem={({item}) => (
                                     <View>
                                         <TouchableOpacity 
-                                        //</View>onPress={() => this.props.navigation.navigate('ProfileUser' , {dataUsuario : item.data})}
+                                        onPress={() => this.props.navigation.navigate('ProfileUser' , {dataUsuario : item.data})}
                                         >
                                             <Text style={styles.blanco}>{item.datos.owner}</Text>
                                         </TouchableOpacity>
@@ -105,7 +106,7 @@ class Buscador extends Component {
                         />
                     ) }
 
-            </View>
+            
             </ScrollView>
         )
     }
@@ -120,7 +121,7 @@ const styles = StyleSheet.create({
         },
         blanco : {
             color : 'white',
-            marginTop : 2
+            marginTop : 4
         },
     buscador: {
         borderColor: 'grey',
