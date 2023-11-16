@@ -6,9 +6,11 @@ import {
     View,
     Text,
     StyleSheet,
-    FlatList 
+    FlatList, 
+    ScrollView
   } from "react-native";
 import {auth, db} from '../firebase/config'
+import { FontAwesome } from '@expo/vector-icons';
 
 class Buscador extends Component {
 
@@ -16,7 +18,7 @@ class Buscador extends Component {
         super(props);
         this.state = {
             usuario: [],
-            buscamos: '',
+            busqueda: '',
             results: [],
             error: '',
         }
@@ -28,7 +30,7 @@ class Buscador extends Component {
             docs.forEach(doc => {
                 usu.push ({
                     id: doc.id,
-                    dato: doc.data()
+                    datos: doc.data()
                 })
             })
 
@@ -42,24 +44,121 @@ class Buscador extends Component {
       
     }
 
+    handleChanges(texto){
+        this.setState({
+            busqueda : texto
+        })
+    }
+
+    buscarUsers(){
+        const lower = this.state.busqueda.toLowerCase()
+        const resultadosBusqueda = this.state.usuario.filter((user) => 
+        user.datos.owner.toLowerCase().includes(lower));
+
+        if (resultadosBusqueda.length === 0){
+            this.setState({
+                resultadosBusqueda : [],
+                error : 'Ningun resultado coincide con tu busqueda...'
+            });
+        } else {
+            this.setState({
+                resultadosBusqueda : resultadosBusqueda,
+                error : ''
+            })
+        }
+    }
 
     render(){
         return(
-            <View style={styles.container}>
-                <Text>Este es el buscador</Text>
+            <ScrollView style={styles.buscador}>
+            <View style={styles.botonInput}>
+                <TextInput  style={styles.input}
+                            keyboardType='default'
+                            placeholder='Buscar perfil por email...'
+                            onChangeText={(texto) => this.handleChanges(texto)}
+                            value={this.state.busqueda}
+                            />
+
+                <TouchableOpacity
+                        style={styles.button}
+                        onPress={() => this.buscarUsers()}>
+                    <FontAwesome name="search" size={28} color="white" />
+                </TouchableOpacity>
+
+                {this.state.error ? (<Text style={styles.blanco}>{this.state.error}</Text>
+                
+                    ) : (
+
+                        <FlatList 
+                                data={this.state.resultadosBusqueda}
+                                keyExtractor={(item) => item.id.toString()}
+                                renderItem={({item}) => (
+                                    <View>
+                                        <TouchableOpacity 
+                                        //</View>onPress={() => this.props.navigation.navigate('ProfileUser' , {dataUsuario : item.data})}
+                                        >
+                                            <Text style={styles.blanco}>{item.datos.owner}</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                )}
+                        
+                        />
+                    ) }
+
             </View>
+            </ScrollView>
         )
     }
 
 }
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      padding : 30,
-      backgroundColor: '#282c34',
-      color : 'white'
-    },
+    botonInput : {
+        display : 'flex',
+        flexDirection:'row', 
+        marginTop : 30
+        },
+        blanco : {
+            color : 'white',
+            marginTop : 2
+        },
+    buscador: {
+        borderColor: 'grey',
+        borderStyle: 'solid',
+        borderWidth: 1,
+        minHeight: 'auto',
+        paddingHorizontal: 15,
+        backgroundColor: '#282c34',
+        flex: 1,
+        display: 'flex',
+        flexDirection:'column'
+      },
+      input: {
+        width : '80%',
+        height: 20,
+        paddingVertical: 15,
+        paddingHorizontal: 10,
+        borderWidth: 1,
+        borderColor: "#ccc",
+        borderStyle: "solid",
+        borderRadius: 6,
+        marginVertical: 10,
+        backgroundColor : 'white'
+      },
+      button: {
+        backgroundColor: '#282c34',
+        paddingHorizontal: 10,
+        paddingVertical: 6,
+        marginTop: 14,
+        marginBottom : 8,
+        textAlign: 'center',
+        height : 20,
+        width: '20%',
+        display : 'flex',
+        justifyContent: 'center',
+        alignContent : "center",
+        alignItems : "center",
+      },
   })
 
 export default Buscador;
