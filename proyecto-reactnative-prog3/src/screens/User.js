@@ -5,6 +5,7 @@ import {
     ActivityIndicator,
     View,
     Text,
+    Image,
     StyleSheet,
     FlatList 
   } from "react-native";
@@ -80,8 +81,8 @@ class User extends Component {
                   <Text style={styles.textoBlanco}>
                     Email: {auth.currentUser.email}
                   </Text>
-                  <Text style={styles.textoBlanco}>Mini bio: </Text>
-                  <Text style={styles.textoBlanco}>Foto de perfil: </Text>
+                  <Text style={styles.textoBlanco}>Mini bio: {this.state.userEnUso[0].user.biografia}</Text>
+                    <Image style={styles.fotoPerfil}  source={{uri:'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'}} resizeMode='contain'/> 
                   <TouchableOpacity onPress={() => this.logout()}>
                   <Text style={styles.textoBlanco}>Logout</Text>
                 </TouchableOpacity>
@@ -124,12 +125,20 @@ const styles = StyleSheet.create({
         flexDos: {
           flex : 2
           },
-    loader: {
-    display : 'flex',
-    flex : 1,
-    justifyContent : 'center',
-    marginTop : 300
-   }
+          fotoPerfil : {
+            height: 40,
+            width: 40,
+            borderWidth: 1,
+            borderRadius: 25,
+            borderColor: 'rgb(240, 228, 228)',
+            marginRight: 10
+           },
+            loader: {
+            display : 'flex',
+            flex : 1,
+            justifyContent : 'center',
+            marginTop : 300
+          }
   })
 
 export default User;
