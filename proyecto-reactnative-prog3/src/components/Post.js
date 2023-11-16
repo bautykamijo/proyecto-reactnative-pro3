@@ -35,7 +35,11 @@ class Post extends Component {
                 }
             });
         }
+
+        console.log(auth.currentUser);
     }
+
+
 
     likear() {
         db.collection("posts").doc(this.props.infoPost.id).update({
@@ -50,6 +54,16 @@ class Post extends Component {
         })
             .then(() => this.setState({ like: false }));
     }
+
+    borrar(id) {
+        db.collection('posts').doc(id).delete()
+          .then(() => {
+            console.log('Post eliminado correctamente')
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+      }
 
 
     render(){
@@ -76,6 +90,16 @@ class Post extends Component {
                     <TouchableOpacity style={styles.button} onPress={ () => this.props.navigation.navigate('Comments')}>
                     <FontAwesome5 name="comment" size={24} color="white" />
                     </TouchableOpacity>
+
+                    {auth.currentUser.email === this.props.infoPost.datos.owner && 
+                    (
+                    <TouchableOpacity style={styles.button} onPress={() =>
+                        auth.currentUser.email === this.props.infoPost.datos.owner &&
+                        this.borrar(this.props.infoPost.id)
+                      }>
+                    <FontAwesome5 name="trash" size={24} color="white" />
+                    </TouchableOpacity>
+                    )}
 
             </View>
 
