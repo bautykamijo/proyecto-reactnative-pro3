@@ -46,6 +46,7 @@ class PostForm extends Component {
          <View style={styles.botonInput}>
         <TextInput
           style={styles.input}
+          maxLength={150} // Aquí estableces el límite de caracteres
           onChangeText={(text) => this.setState({ post: text })}
           placeholder="Escribe tu mensaje aqui..."
           keyboardType="default"
@@ -57,6 +58,7 @@ class PostForm extends Component {
           <FontAwesome name="send" size={26} color="white" />
         </TouchableOpacity>
         </View>
+        <Text style={styles.limite}>{this.state.post.length}/150</Text> 
         </> }
       </View>
     );
@@ -79,7 +81,7 @@ const styles = StyleSheet.create({
       borderStyle: "solid",
       borderRadius: 6,
       marginVertical: 10,
-      backgroundColor : 'white'
+      backgroundColor : 'white',
     },
     button: {
       backgroundColor: '#282c34',
@@ -94,6 +96,11 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       alignContent : "center",
       alignItems : "center",
+    },
+    limite : {
+      color: 'white',
+      fontWeight : 500,
+      marginTop : 15
     },
     botonInput : {
       display : 'flex',

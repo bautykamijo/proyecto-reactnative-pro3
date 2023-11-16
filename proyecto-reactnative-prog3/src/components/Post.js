@@ -80,7 +80,7 @@ class Post extends Component {
             </View>
 
                 <Text style={styles.cantLikes}><strong>{this.props.infoPost.datos.likes.length}</strong> likes</Text>
-                <Text style={styles.cantLikes}> <strong>username </strong> {this.props.infoPost.datos.post}</Text>
+                <Text style={styles.cantLikes}>{this.props.infoPost.datos.post}</Text>
                 <Text style={styles.cantLikes}>Ver todos los <strong>X</strong> comentarios</Text>
 
             </View>
@@ -152,6 +152,7 @@ const styles = StyleSheet.create({
     likesComments : {
         display : 'flex',
         flexDirection:'row', 
+        flexWrap : 'wrap',
         marginBottom : 2
     },
     cantLikes : {

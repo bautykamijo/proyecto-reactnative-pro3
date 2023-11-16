@@ -57,7 +57,7 @@ class Home extends Component {
                 listaPost : postsARenderizar
         }, ()=>{
 
-            console.log(this.state.userEnUso);
+            console.log(this.state.listaPost);
         })
            
            
