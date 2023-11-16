@@ -16,7 +16,8 @@ class Post extends Component {
         this.state = {
             like: false,
             commentText: '',
-            comments: this.props.infoPost.datos.comments || [],
+            comments: [],
+            showComments: false
         };
     }
 
@@ -54,6 +55,20 @@ class Post extends Component {
         })
             .then(() => this.setState({ like: false }));
     }
+    comentar (comentario){
+        let us = this.props.infoPost.datos.owner
+
+        let newComment = {
+            usuario : us,
+            comentario : comentario
+        };
+
+        let photo = db.collection("posts").doc(this.props.infoPost.id)
+
+        photo.update({
+            comments: firebase.firestore.FieldValue.arrayUnion(newComment)
+        })
+    }
 
     borrar(id) {
         db.collection('posts').doc(id).delete()
@@ -86,12 +101,8 @@ class Post extends Component {
                         <AntDesign name="heart" size={24} color="white" />
                     </TouchableOpacity>
                 }
-
-                    <TouchableOpacity style={styles.button} onPress={ () => this.props.navigation.navigate('Comments')}>
-                    <FontAwesome5 name="comment" size={24} color="white" />
-                    </TouchableOpacity>
-
-                    {auth.currentUser.email === this.props.infoPost.datos.owner && 
+                <Text style={styles.cantLikes}><strong>{this.props.infoPost.datos.likes.length}</strong> likes</Text>
+                {auth.currentUser.email === this.props.infoPost.datos.owner && 
                     (
                     <TouchableOpacity style={styles.button} onPress={() =>
                         auth.currentUser.email === this.props.infoPost.datos.owner &&
@@ -101,11 +112,36 @@ class Post extends Component {
                     </TouchableOpacity>
                     )}
 
-            </View>
 
-                <Text style={styles.cantLikes}><strong>{this.props.infoPost.datos.likes.length}</strong> likes</Text>
-                <Text style={styles.cantLikes}>{this.props.infoPost.datos.post}</Text>
-                <Text style={styles.cantLikes}>Ver todos los <strong>X</strong> comentarios</Text>
+            </View>
+            <Text style={styles.cantLikes}>{this.props.infoPost.datos.post}</Text>
+            
+            <View style={styles.cris}>
+            <TextInput
+                        style={styles.input}
+                        onChangeText={(texto) => this.setState({ commentText: texto })}
+                        placeholder="comment"
+                        keyboardType="default"
+                        value={this.state.commentText}
+                    />
+                    <TouchableOpacity style={styles.buttonComms} onPress={ () => this.comentar(this.state.commentText)}>
+                    <FontAwesome5 name="comment" size={24} color="white" />
+                    </TouchableOpacity>
+                    </View>
+                   
+                              <FlatList
+                                data={this.props.infoPost.datos.comments}
+                                keyExtractor={(ok) => ok.id}
+                                renderItem={({ item }) => (
+                                <TouchableOpacity>
+                                    <View styles={styles.comentarioUsuario}>
+                                    <Text><Text style={styles.usuario}>{item.usuario}</Text>: {item.comentario}</Text>
+                                    </View>
+                                </TouchableOpacity>
+                                )}
+                            />
+
+               
 
             </View>
         );
@@ -116,9 +152,13 @@ const styles = StyleSheet.create({
     formContainer: {
         height: 500,
         backgroundColor: '#282c34',
-        marginTop : 100,
+        marginTop : 150,
         marginBottom : 80,
         color : 'white',  
+    },
+    cris : {
+        display : 'flex',
+        flexDirection : 'row',
     },
     camera: {
         width: '100vw',
@@ -127,6 +167,7 @@ const styles = StyleSheet.create({
     },
     input: {
         height: 20,
+        width: '70%',
         paddingVertical: 15,
         paddingHorizontal: 10,
         borderWidth: 1,
@@ -135,6 +176,11 @@ const styles = StyleSheet.create({
         borderRadius: 6,
         marginVertical: 10,
     },
+    botonInput : {
+        display : 'flex',
+        flexDirection:'row', 
+        marginTop : 30
+        },
     button: {
         backgroundColor: '#282c34',
         paddingHorizontal: 10,
@@ -151,6 +197,23 @@ const styles = StyleSheet.create({
         display : 'flex',
         justifyContent: 'left'
     },
+buttonComms: {
+    backgroundColor: '#282c34',
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    marginTop: 5,
+    marginBottom : 8,
+    textAlign: 'center',
+    borderRadius: 4,
+    borderWidth: 1,
+    borderStyle: 'solid',
+    borderColor: '#282c34',
+    height : 28,
+    width: '20%',
+    display : 'flex',
+    justifyContent: 'left',
+
+},
     textButton: {
         textAlign : 'left',
         fontSize : 18,
@@ -178,6 +241,15 @@ const styles = StyleSheet.create({
         flexDirection:'row', 
         flexWrap : 'wrap',
         marginBottom : 2
+    },
+    nestor : {
+        display : 'flex',
+        flexDirection:'row', 
+        marginLeft : 5,
+        marginTop : 15,
+        marginBottom : 15,
+        marginRight: 80,
+        color : 'white'
     },
     cantLikes : {
         display : 'flex',
@@ -209,6 +281,10 @@ const styles = StyleSheet.create({
     commentContainer: {
         marginVertical: 10,
     },
+    comentarioUsuario: {
+        flexDirection: 'row',
+        alignItems: 'center',
+      }
 });
 
 export default Post;
