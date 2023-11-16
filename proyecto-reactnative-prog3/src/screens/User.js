@@ -82,6 +82,9 @@ class User extends Component {
                   </Text>
                   <Text style={styles.textoBlanco}>Mini bio: </Text>
                   <Text style={styles.textoBlanco}>Foto de perfil: </Text>
+                  <TouchableOpacity onPress={() => this.logout()}>
+                  <Text style={styles.textoBlanco}>Logout</Text>
+                </TouchableOpacity>
                 </View>
       
                 <View style={styles.flexDos}> 
@@ -92,9 +95,7 @@ class User extends Component {
                   />
                 </View>
       
-                <TouchableOpacity onPress={() => this.logout()}>
-                  <Text>Logout</Text>
-                </TouchableOpacity>
+
               </>
             ) : (
               <View>
@@ -117,13 +118,18 @@ const styles = StyleSheet.create({
     textoBlanco: {
         color: 'white',
         },
+      flexUno: {
+        flex : 1,
+        },
+        flexDos: {
+          flex : 2
+          },
     loader: {
     display : 'flex',
     flex : 1,
     justifyContent : 'center',
     marginTop : 300
-
-        }
+   }
   })
 
 export default User;
