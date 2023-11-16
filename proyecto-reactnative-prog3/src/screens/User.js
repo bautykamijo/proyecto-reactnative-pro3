@@ -98,7 +98,7 @@ class User extends Component {
               </>
             ) : (
               <View>
-                <ActivityIndicator size="large" color="white" />
+                <ActivityIndicator size='large' color="white" style={styles.loader}  />
               </View>
             )}
           </View>
@@ -114,9 +114,16 @@ const styles = StyleSheet.create({
       backgroundColor: '#282c34',
       color : 'white'
     },
-textoBlanco: {
-    color: 'white',
-    }
+    textoBlanco: {
+        color: 'white',
+        },
+    loader: {
+    display : 'flex',
+    flex : 1,
+    justifyContent : 'center',
+    marginTop : 300
+
+        }
   })
 
 export default User;

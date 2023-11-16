@@ -32,12 +32,14 @@ class Buscador extends Component {
                 })
             })
 
+
             this.setState ({
                 usuario: usu,
             });
+            console.log(this.state.usuario)
         })
 
-        console.log(this.state.usuario);
+      
     }
 
 
