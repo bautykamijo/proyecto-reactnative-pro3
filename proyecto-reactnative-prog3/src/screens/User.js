@@ -73,7 +73,7 @@ class User extends Component {
           <View style={styles.container}>
             {this.state.userEnUso.length > 0 ? (
               <>
-                <View>
+                <View style={styles.flexUno}>
                   <Text style={styles.textoBlanco}>
                     Nombre de usuario: {this.state.userEnUso[0].user.userName}
                   </Text>
@@ -84,8 +84,8 @@ class User extends Component {
                   <Text style={styles.textoBlanco}>Foto de perfil: </Text>
                 </View>
       
-                <View>
-                  <FlatList
+                <View style={styles.flexDos}> 
+                 <FlatList
                     data={this.state.listaPost}
                     keyExtractor={(onePost) => onePost.id}
                     renderItem={({ item }) => <Post infoPost={item} navigation={this.props.navigation} />}

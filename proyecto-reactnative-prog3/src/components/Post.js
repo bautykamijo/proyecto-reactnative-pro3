@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#282c34',
         marginTop : 100,
         marginBottom : 80,
-        color : 'white',
+        color : 'white',  
     },
     camera: {
         width: '100vw',
