@@ -10,7 +10,10 @@ import {
     FlatList 
   } from "react-native";
 import { auth, db } from "../firebase/config";
+import { deleteAuthUser } from 'firebase/auth';
 import Post from '../components/Post';
+import { FontAwesome5 } from '@expo/vector-icons'; 
+
 
 
 class User extends Component {
@@ -62,6 +65,22 @@ class User extends Component {
         )
     }
 
+    borrarPerfil() {
+      const user = auth.currentUser;
+    
+      deleteAuthUser(user)
+        .then(() => {
+          // User deleted.
+          console.log('Usuario eliminado correctamente');
+          this.props.navigation.navigate('Login');
+        })
+        .catch((error) => {
+          // An error ocurred
+          console.error('Error al eliminar el usuario:', error);
+        });
+    }
+    
+
     logout() {
         auth.signOut();
         this.props.navigation.navigate ("Login")
@@ -76,7 +95,11 @@ class User extends Component {
               <>
                 <View style={styles.flexUno}>
                   <Text style={styles.textoBlanco}>
-                    Nombre de usuario: {this.state.userEnUso[0].user.userName}
+                    Nombre de usuario: {this.state.userEnUso[0].user.userName} <TouchableOpacity style={styles.button} onPress={() =>
+                        this.borrarPerfil()
+                      }>
+                    <FontAwesome5 name="trash" size={15} color="white" />
+                    </TouchableOpacity>
                   </Text>
                   <Text style={styles.textoBlanco}>
                     Email: {auth.currentUser.email}
