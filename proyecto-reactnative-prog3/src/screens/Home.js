@@ -74,7 +74,7 @@ class Home extends Component {
             {this.state.listaPost.length === 0 ? 
 
                 <View>
-                    <ActivityIndicator size='large' color='white' />
+                    <ActivityIndicator size='large' color='white' style={styles.loader} />
                 </View>
            
             :
@@ -95,6 +95,12 @@ const styles = StyleSheet.create({
       backgroundColor: '#282c34',
       color : 'white'
     },
+    loader: {
+        display : 'flex',
+        flex : 1,
+        justifyContent : 'center',
+        marginTop : 300
+    }
   })
 
 export default Home;
