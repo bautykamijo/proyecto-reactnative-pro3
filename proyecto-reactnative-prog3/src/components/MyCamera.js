@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import {Camera} from 'expo-camera'
 import { Text, StyleSheet, View, TouchableOpacity, Image } from "react-native";
 import { storage } from "../firebase/config";
+import { AntDesign } from '@expo/vector-icons'; 
+
 
 
 
@@ -66,27 +68,19 @@ class MyCamera extends Component {
                 this.state.showCamera ?
                 <View style={styles.formContainer} >
                     <Camera style={styles.camera} type={Camera.Constants.Type.front} ref={metodosCamara => this.metodosCamara = metodosCamara}/>
-                    <TouchableOpacity
-                        style={styles.button}
-                         onPress={() => this.sacarFoto()}
-                        >
-                        <Text style={styles.textButton}>Sacar foto</Text>
+
+                    <TouchableOpacity style={styles.button}onPress={() => this.sacarFoto()} >
+                         <AntDesign name="camera" size={24} color="white" />
                     </TouchableOpacity>
                 </View>
                 :
                 <View style={styles.formContainer}>
                     <Image style={styles.camera} source={{uri: this.state.photo}} />
-                    <TouchableOpacity
-                        style={styles.button}
-                         onPress={() => this.aceptarFoto()}
-                        >
-                        <Text style={styles.textButton}>Aceptar</Text>
+                    <TouchableOpacity style={styles.buttonVerde} onPress={() => this.aceptarFoto()}>
+                        <AntDesign name="check" size={26} color="white"/>
                     </TouchableOpacity>
-                    <TouchableOpacity
-                        style={styles.button}
-                         onPress={() => this.rechazarFoto()}
-                        >
-                        <Text style={styles.textButton}>Rechazar</Text>
+                    <TouchableOpacity style={styles.buttonRojo} onPress={() => this.rechazarFoto()}>
+                        <AntDesign name="close" size={26} color="white" />
                     </TouchableOpacity>
                 </View>
                 :
@@ -105,6 +99,7 @@ const styles = StyleSheet.create({
     camera: {
         widht: '100%',
         height: '100%',
+        marginBottom : 8
     },
     input: {
       height: 20,
@@ -115,17 +110,56 @@ const styles = StyleSheet.create({
       borderStyle: "solid",
       borderRadius: 6,
       marginVertical: 10,
+      backgroundColor : 'white'
     },
     button: {
-      backgroundColor: "blue",
+        backgroundColor: "#282c34",
+        paddingHorizontal: 10,
+        paddingVertical: 6,
+        textAlign: "center",
+        display : 'flex',
+        marginBottom : 1,
+        borderRadius: 4,
+        borderWidth: 1,
+        borderStyle: 'solid',
+        borderColor: 'white',
+        justifyContent: 'center',
+        alignContent : "center",
+        alignItems : "center",
+        widht : '100%'
+      },
+    buttonRojo: {
+      backgroundColor: "rgb(255, 0, 0)",
       paddingHorizontal: 10,
       paddingVertical: 6,
       textAlign: "center",
+      display : 'flex',
+      marginBottom : 1,
       borderRadius: 4,
       borderWidth: 1,
-      borderStyle: "solid",
-      borderColor: "#28a745",
+      borderStyle: 'solid',
+      borderColor: 'white',
+      justifyContent: 'center',
+      alignContent : "center",
+      alignItems : "center",
+      widht : '100%'
     },
+    buttonVerde: {
+        backgroundColor: "rgb(18, 252, 14)",
+        paddingHorizontal: 10,
+        paddingVertical: 6,
+        textAlign: "center",
+        display : 'flex',
+        marginBottom : 1,
+        borderRadius: 4,
+        borderWidth: 1,
+        borderStyle: 'solid',
+        borderColor: 'white',
+        justifyContent: 'center',
+        alignContent : "center",
+        alignItems : "center",
+        widht : '100%'
+      },
     textButton: {
       color: "#fff",
     },

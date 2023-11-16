@@ -18,12 +18,32 @@ class Home extends Component {
     constructor(props){
         super(props);
         this.state = {
-            listaPost : []
+            listaPost : [],
+            userEnUso : []
         }
     }
 
 
     componentDidMount(){
+
+
+        db.collection('users').where('owner', '==', auth.currentUser.email).onSnapshot(
+            (usuario) => {
+                let usuarioIndicado = [];
+
+                usuario.forEach( actual => {
+                                usuarioIndicado.push(
+                                    {id : actual.id,
+                                    user : actual.data()})})
+
+            this.setState({
+                userEnUso : usuarioIndicado
+            })
+
+            }
+
+        )
+
         db.collection('posts').orderBy('createdAt', 'desc').onSnapshot(
             posteos => {
                 let postsARenderizar = [];
@@ -37,7 +57,7 @@ class Home extends Component {
                 listaPost : postsARenderizar
         }, ()=>{
 
-            console.log(this.state.listaPost);
+            console.log(this.state.userEnUso);
         })
            
            
@@ -62,7 +82,7 @@ class Home extends Component {
                     <FlatList 
                         data= {this.state.listaPost}
                         keyExtractor={ onePost => onePost.id }
-                        renderItem={ ({item}) => <Post infoPost = { item } /> } />}
+                        renderItem={ ({item}) => <Post infoPost={item}  navigation={this.props.navigation} /> } />}
 
         </View>
     )}

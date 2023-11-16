@@ -57,39 +57,31 @@ class Post extends Component {
         return(
             <View style={styles.formContainer}>
                 <TouchableOpacity onPress={ () => this.props.navigation.navigate('User')} style={styles.perfilBox}>
-                <Text>{this.props.infoPost.datos.owner}</Text>
+                <Image style={styles.fotoPerfil}  source={{uri:'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'}} resizeMode='contain'/> 
+                <Text style={styles.usuario} >{this.props.infoPost.datos.owner}</Text>
                 </TouchableOpacity>
                 <Image style={styles.camera} source={{ uri: this.props.infoPost.datos.photo }} />
                
             <View style={styles.likesComments} >
                 {this.state.like ?
                     <TouchableOpacity style={styles.button} onPress={() => this.dislikear()}>
-                        <Text style={styles.textButton}><AntDesign name="heart" size={24} color="red" /></Text>
+                        <AntDesign name="heart" size={24} color="red" />
                     </TouchableOpacity>
                     :
                     <TouchableOpacity style={styles.button} onPress={() => this.likear()}>
-                        <Text style={styles.textButton}><AntDesign name="heart" size={24} color="white" /></Text>
+                        <AntDesign name="heart" size={24} color="white" />
                     </TouchableOpacity>
                 }
 
                     <TouchableOpacity style={styles.button} onPress={ () => this.props.navigation.navigate('Comments')}>
-                    <Text style={styles.textButton}><FontAwesome5 name="comment" size={24} color="white" /></Text>
+                    <FontAwesome5 name="comment" size={24} color="white" />
                     </TouchableOpacity>
 
             </View>
 
-                <Text style={styles.cantLikes}>Likeado por {this.props.infoPost.datos.likes.length} personas</Text>
-                <Text style={styles.cantLikes}>{this.props.infoPost.datos.post}</Text>
-
-                <FlatList
-                    data={this.state.comments}
-                    keyExtractor={(item, index) => index.toString()}
-                    renderItem={({ item }) => (
-                        <View style={styles.commentContainer}>
-                            <Text>{item.user}: {item.text}</Text>
-                        </View>
-                    )}
-                />
+                <Text style={styles.cantLikes}><strong>{this.props.infoPost.datos.likes.length}</strong> likes</Text>
+                <Text style={styles.cantLikes}> <strong>username </strong> {this.props.infoPost.datos.post}</Text>
+                <Text style={styles.cantLikes}>Ver todos los <strong>X</strong> comentarios</Text>
 
             </View>
         );
@@ -100,11 +92,9 @@ const styles = StyleSheet.create({
     formContainer: {
         height: 500,
         backgroundColor: '#282c34',
-        marginTop : 150,
+        marginTop : 100,
+        marginBottom : 80,
         color : 'white',
-        borderColor: 'white',
-        borderStyle: 'solid',
-        borderRadius: 6,
     },
     camera: {
         width: '100vw',
@@ -143,6 +133,13 @@ const styles = StyleSheet.create({
         color: '#fff',
         marginLeft : 10
     },
+    usuario: {
+        fontSize : 16,
+        color: 'white',
+        fontWeight : 700,
+        paddingTop : 10,
+        paddingLeft : 1
+    },
     texto : {
         fontSize: 14,
         flex: 1,
@@ -155,13 +152,24 @@ const styles = StyleSheet.create({
     likesComments : {
         display : 'flex',
         flexDirection:'row', 
+        marginBottom : 2
     },
     cantLikes : {
         display : 'flex',
         flexDirection:'row', 
         marginLeft : 5,
         marginTop : 15,
-        marginBottom : 15
+        marginBottom : 15,
+        color : 'white'
+
+    },
+    fotoPerfil : {
+        height: 40,
+        width: 40,
+        borderWidth: 1,
+        borderRadius: 25,
+        borderColor: 'rgb(240, 228, 228)',
+        marginRight: 10
     },
     perfilBox : {
         flex:1,
@@ -171,7 +179,7 @@ const styles = StyleSheet.create({
         justifyContent : 'left',
         marginLeft : 5,
         marginTop : 15,
-        marginBottom : 35
+        marginBottom : 50
     },
     commentContainer: {
         marginVertical: 10,

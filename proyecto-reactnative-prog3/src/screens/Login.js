@@ -61,6 +61,7 @@ class Login extends Component {
 }
 const styles = StyleSheet.create({
     formContainer:{
+        backgroundColor: '#282c34',
         paddingHorizontal:600,
         marginTop: 20,
     },

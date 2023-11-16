@@ -1,12 +1,21 @@
-import { View, Text, TextInput, TouchableOpacity, FlatList, ScrollView } from 'react-native';
 import React, { Component } from 'react';
+import {
+    TextInput,
+    TouchableOpacity,
+    ActivityIndicator,
+    View,
+    Text,
+    StyleSheet,
+    FlatList 
+  } from "react-native";
 import {auth, db} from '../firebase/config'
 
-class Bucador extends Component {
+class Buscador extends Component {
+
     constructor(props){
         super(props);
         this.state = {
-            usuaria: [],
+            usuario: [],
             buscamos: '',
             results: [],
             error: '',
@@ -14,7 +23,7 @@ class Bucador extends Component {
     }
 
     componentDidMount() {
-        db.collection('users').onSnapshot (docs => {
+        db.collection('users').onSnapshot(docs => {
             let usu = []
             docs.forEach(doc => {
                 usu.push ({
@@ -24,9 +33,31 @@ class Bucador extends Component {
             })
 
             this.setState ({
-                usuaria: usu,
+                usuario: usu,
             });
         })
+
+        console.log(this.state.usuario);
+    }
+
+
+    render(){
+        return(
+            <View style={styles.container}>
+                <Text>Este es el buscador</Text>
+            </View>
+        )
     }
 
 }
+
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      padding : 30,
+      backgroundColor: '#282c34',
+      color : 'white'
+    },
+  })
+
+export default Buscador;

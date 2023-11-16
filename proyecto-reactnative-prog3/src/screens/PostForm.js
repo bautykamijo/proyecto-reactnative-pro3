@@ -1,6 +1,8 @@
 import react, { Component } from "react";
 import {TextInput, TouchableOpacity, View, Text, StyleSheet, FlatList} from "react-native";
 import MyCamera from "../components/MyCamera";
+import { FontAwesome } from '@expo/vector-icons'; 
+
 
 import { auth, db } from "../firebase/config";
 
@@ -36,12 +38,12 @@ class PostForm extends Component {
 
   render() {
     return (
-      <View>
+      <View style={styles.container}>
 
         {this.state.showCamera ? <MyCamera onImageUpload={(url) => this.onImageUpload(url)} /> : 
 
         <>
-
+         <View style={styles.botonInput}>
         <TextInput
           style={styles.input}
           onChangeText={(text) => this.setState({ post: text })}
@@ -52,20 +54,23 @@ class PostForm extends Component {
         <TouchableOpacity
           style={styles.button}
           onPress={() => this.postear()}>
-          <Text style={styles.textButton}>Postear</Text>
+          <FontAwesome name="send" size={26} color="white" />
         </TouchableOpacity>
+        </View>
         </> }
       </View>
     );
   }
 }
 const styles = StyleSheet.create({
-    formContainer: {
+    container: {
+      flex : 1,
       paddingHorizontal: 10,
       backgroundColor: '#282c34',
       marginTop: 20,
     },
     input: {
+      width : '80%',
       height: 20,
       paddingVertical: 15,
       paddingHorizontal: 10,
@@ -74,17 +79,27 @@ const styles = StyleSheet.create({
       borderStyle: "solid",
       borderRadius: 6,
       marginVertical: 10,
+      backgroundColor : 'white'
     },
     button: {
-      backgroundColor: "blue",
+      backgroundColor: '#282c34',
       paddingHorizontal: 10,
       paddingVertical: 6,
-      textAlign: "center",
-      borderRadius: 4,
-      borderWidth: 1,
-      borderStyle: "solid",
-      borderColor: "#28a745",
+      marginTop: 14,
+      marginBottom : 8,
+      textAlign: 'center',
+      height : 20,
+      width: '20%',
+      display : 'flex',
+      justifyContent: 'center',
+      alignContent : "center",
+      alignItems : "center",
     },
+    botonInput : {
+      display : 'flex',
+      flexDirection:'row', 
+      marginTop : 30
+      },
     textButton: {
       color: "#fff",
     },

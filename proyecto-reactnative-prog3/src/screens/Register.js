@@ -100,10 +100,12 @@ class Register extends Component {
 
 const styles = StyleSheet.create({
     formContainer:{
+        backgroundColor: '#282c34',
         paddingHorizontal:10,
         marginTop: 20,
     },
     input:{
+        backgroundColor : 'white',
         height:20,
         paddingVertical:15,
         paddingHorizontal: 10,
