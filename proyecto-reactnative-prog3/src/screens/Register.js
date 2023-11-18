@@ -14,7 +14,6 @@ class Register extends Component {
             password : '',
             biografia : '',
             error: '',
-            fotoDePerfil: '',
             loggedIn: false,
 
         }
@@ -51,7 +50,7 @@ class Register extends Component {
     render(){
         return(
             <View style={styles.formContainer}>
-                <Text>Registrarse</Text>
+                <Text style={styles.blanco}>Registrarse</Text>
                 <TextInput
                 style={styles.input}
                 keyboardType='default'
@@ -62,8 +61,10 @@ class Register extends Component {
                 style={styles.input}
                 keyboardType='default'
                 placeholder='Biography'
+                maxLength={60}
                 onChangeText={ text => this.setState({biografia:text}) }
                 value={this.state.biografia} />
+                <Text style={styles.limite}>{this.state.biografia.length}/60 caracteres</Text> 
                 <TextInput
                 style={styles.input}
                 keyboardType='email-address'
@@ -78,7 +79,7 @@ class Register extends Component {
                 onChangeText={ text => this.setState({password:text}) }
                 value={this.state.password} />
                
-               {!this.state.email || !this.state.password  ? (
+               {!this.state.email || !this.state.password   ? (
             <TouchableOpacity style={styles.textButton} onPress={() => alert("Debe completar los campos obligatorios")}>
                 <Text style={styles.button}>Registrarse</Text>
             </TouchableOpacity>
@@ -100,10 +101,16 @@ class Register extends Component {
 
 const styles = StyleSheet.create({
     formContainer:{
+        flex : 1,
         backgroundColor: '#282c34',
         paddingHorizontal:10,
         marginTop: 20,
     },
+    limite : {
+        color: 'white',
+        fontWeight : 500,
+        marginBottom : 10
+      },
     input:{
         backgroundColor : 'white',
         height:20,
@@ -123,10 +130,12 @@ const styles = StyleSheet.create({
         borderRadius:4, 
         borderWidth:1,
         borderStyle: 'solid',
-        borderColor: '#28a745'
+        borderColor: '#28a745',
+        color: 'white'
+
     },
-    textButton:{
-        color: '#fff'
+    blanco:{
+        color: 'white'
     },
     botonDeshabilitado: {
         backgroundColor: '#7f848e',
@@ -139,6 +148,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
         textAlign: "center",
         fontSize: 15,
+        color: 'white'
     }
 
 

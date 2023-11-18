@@ -1,6 +1,6 @@
 // Post.js
 import React, { Component } from 'react';
-import { TextInput, TouchableOpacity, View, Text, StyleSheet, FlatList, Image } from 'react-native';
+import { TextInput, TouchableOpacity, View, Text, StyleSheet, FlatList, Image, ActivityIndicator } from 'react-native';
 import { AntDesign } from '@expo/vector-icons'; 
 import { FontAwesome5 } from '@expo/vector-icons'; 
 import { auth, db } from '../firebase/config';
@@ -87,7 +87,7 @@ class Post extends Component {
 
         return(
             <View style={styles.formContainer}>
-                <TouchableOpacity onPress={ () => this.props.navigation.navigate('User')} style={styles.perfilBox}>
+                <TouchableOpacity onPress={ () => this.props.navigation.navigate('User', this.props.infoPost.datos.owner)} style={styles.perfilBox}>
                 <Image style={styles.fotoPerfil}  source={{uri:'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'}} resizeMode='contain'/> 
                 <Text style={styles.usuario} >{this.props.infoPost.datos.owner}</Text>
                 </TouchableOpacity>
@@ -103,7 +103,9 @@ class Post extends Component {
                         <AntDesign name="heart" size={24} color="white" />
                     </TouchableOpacity>
                 }
-                <Text style={styles.cantLikes}><strong>{this.props.infoPost.datos.likes.length}</strong> like/s y <strong>{this.props.infoPost.datos.likes.length}</strong> comentario/s</Text>
+                {this.props.infoPost.datos.comments ?
+                <Text style={styles.cantLikes}><strong>{this.props.infoPost.datos.likes.length}</strong> like/s y <strong>{this.props.infoPost.datos.comments.length}</strong> comentario/s</Text> : 
+                <Text style={styles.cantLikes}><strong>{this.props.infoPost.datos.likes.length}</strong> like/s y <strong>0</strong> comentario/s</Text> }
                 {auth.currentUser.email === this.props.infoPost.datos.owner && 
                     (
                     <TouchableOpacity style={styles.buttonTrash} onPress={() =>
@@ -132,17 +134,24 @@ class Post extends Component {
                     </TouchableOpacity>
                     </View>
                    
-                              <FlatList
-                                data={this.props.infoPost.datos.comments}
-                                keyExtractor={(ok) => ok.id}
-                                renderItem={({ item }) => (
-                                <TouchableOpacity>
-                                    <View styles={styles.comentarioUsuario}>
-                                    <Text style={styles.textoComment} ><Text style={styles.mailComment}>{item.usuario}</Text> {item.comentario}</Text>
-                                    </View>
-                                </TouchableOpacity>
-                                )}
-                            />
+
+                    {this.props.infoPost.datos.comments && this.props.infoPost.datos.comments.length > 0 ? (
+  <FlatList
+    data={this.props.infoPost.datos.comments.slice(-4).reverse()}
+    keyExtractor={(ok) => ok.id}
+    renderItem={({ item }) => (
+      <TouchableOpacity>
+        <View styles={styles.comentarioUsuario}>
+          <Text style={styles.textoComment}><Text style={styles.mailComment}>{auth.currentUser.email}</Text> {item.comentario}</Text>
+        </View>
+      </TouchableOpacity>
+    )}
+  />
+) : (
+  <View>
+    <Text style={styles.cantLikes}>No hay comentarios en este post...</Text>
+  </View>
+)}
 
                
 

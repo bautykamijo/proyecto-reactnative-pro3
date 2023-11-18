@@ -8,6 +8,7 @@ class Login extends Component {
         this.state = {
             email: "",
             password: "",
+            recuerdame : false,
         };
     }
 
@@ -21,12 +22,16 @@ class Login extends Component {
             console.log(error);
         })
     }
+
+    controlarRecuerdame = () => {
+        this.setState(estadoPrevio => ({ recuerdame: !estadoPrevio.recuerdame }));
+    }
     
 
     render() {
         return (
-            <View style = {StyleSheet.formContainer}>
-                <Text>Login</Text>
+            <View style = {styles.formContainer}>
+                <Text style = {styles.blanco}>Login</Text>
                 <TextInput
                     style={styles.input}
                     onChangeText={(text) => this.setState({ email: text })}
@@ -42,6 +47,10 @@ class Login extends Component {
                     secureTextEntry={true}
                     value={this.state.password}
                 />
+
+
+
+                
                 {!this.state.email || !this.state.password  ? (
             <TouchableOpacity style={styles.textButton} onPress={() => alert("Debe completar los campos obligatorios")}>
                 <Text style={styles.button}>Ingresar</Text>
@@ -50,8 +59,8 @@ class Login extends Component {
             <TouchableOpacity style={styles.textButton} onPress={()=>this.login(this.state.email, this.state.password)}>
                 <Text style={styles.button}>Ingresar</Text>    
             </TouchableOpacity> 
-            
             )}
+
         <TouchableOpacity onPress={ () => this.props.navigation.navigate('Register')}>
             <Text style={styles.irAregister}>No tengo cuenta. Ir a register</Text>
          </TouchableOpacity>
@@ -63,8 +72,10 @@ const styles = StyleSheet.create({
     formContainer:{
         flex : 1,
         backgroundColor: '#282c34',
-        paddingHorizontal:600,
         marginTop: 20,
+    },
+    blanco:{
+        color: 'white'
     },
     input:{
         height:20,
@@ -75,8 +86,10 @@ const styles = StyleSheet.create({
         borderStyle: 'solid',
         borderRadius: 6,
         marginVertical:10,
+        backgroundColor:'white',
     },
     button:{
+        color : 'white',
         backgroundColor:'#28a745',
         paddingHorizontal: 10,
         paddingVertical: 6,
@@ -94,6 +107,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
         textAlign: "center",
         fontSize: 15,
+        color : 'white'
     }
 
 })
