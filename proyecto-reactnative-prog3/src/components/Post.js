@@ -63,7 +63,9 @@ class Post extends Component {
             comentario : comentario
         };
 
-        let photo = db.collection("posts").doc(this.props.infoPost.id)
+        let photo = db.collection("posts").doc(this.props.infoPost.id);
+
+        console.log(this.props.infoPost.datos.comments);
 
         photo.update({
             comments: firebase.firestore.FieldValue.arrayUnion(newComment)
@@ -101,10 +103,10 @@ class Post extends Component {
                         <AntDesign name="heart" size={24} color="white" />
                     </TouchableOpacity>
                 }
-                <Text style={styles.cantLikes}><strong>{this.props.infoPost.datos.likes.length}</strong> likes</Text>
+                <Text style={styles.cantLikes}><strong>{this.props.infoPost.datos.likes.length}</strong> like/s y <strong>{this.props.infoPost.datos.likes.length}</strong> comentario/s</Text>
                 {auth.currentUser.email === this.props.infoPost.datos.owner && 
                     (
-                    <TouchableOpacity style={styles.button} onPress={() =>
+                    <TouchableOpacity style={styles.buttonTrash} onPress={() =>
                         auth.currentUser.email === this.props.infoPost.datos.owner &&
                         this.borrar(this.props.infoPost.id)
                       }>
@@ -120,7 +122,8 @@ class Post extends Component {
             <TextInput
                         style={styles.input}
                         onChangeText={(texto) => this.setState({ commentText: texto })}
-                        placeholder="comment"
+                        placeholder="Comenta aqui ..."
+                        maxLength={40}
                         keyboardType="default"
                         value={this.state.commentText}
                     />
@@ -135,7 +138,7 @@ class Post extends Component {
                                 renderItem={({ item }) => (
                                 <TouchableOpacity>
                                     <View styles={styles.comentarioUsuario}>
-                                    <Text><Text style={styles.usuario}>{item.usuario}</Text>: {item.comentario}</Text>
+                                    <Text style={styles.textoComment} ><Text style={styles.mailComment}>{item.usuario}</Text> {item.comentario}</Text>
                                     </View>
                                 </TouchableOpacity>
                                 )}
@@ -167,14 +170,16 @@ const styles = StyleSheet.create({
     },
     input: {
         height: 20,
-        width: '70%',
+        width: '85%',
         paddingVertical: 15,
         paddingHorizontal: 10,
-        borderWidth: 1,
+        borderWidth: 2,
         borderColor: '#ccc',
         borderStyle: 'solid',
         borderRadius: 6,
         marginVertical: 10,
+        color : 'white'
+        
     },
     botonInput : {
         display : 'flex',
@@ -197,12 +202,29 @@ const styles = StyleSheet.create({
         display : 'flex',
         justifyContent: 'left'
     },
+    buttonTrash: {
+        backgroundColor: '#282c34',
+        paddingHorizontal: 10,
+        paddingVertical: 6,
+        marginTop: 5,
+        marginBottom : 8,
+        textAlign: 'center',
+        borderRadius: 4,
+        borderWidth: 1,
+        borderStyle: 'solid',
+        borderColor: '#282c34',
+        height : 28,
+        width: 62,
+        display : 'flex',
+        justifyContent: 'right'
+    },
 buttonComms: {
     backgroundColor: '#282c34',
     paddingHorizontal: 10,
     paddingVertical: 6,
     marginTop: 5,
     marginBottom : 8,
+    marginLeft : 10,
     textAlign: 'center',
     borderRadius: 4,
     borderWidth: 1,
@@ -284,6 +306,18 @@ buttonComms: {
     comentarioUsuario: {
         flexDirection: 'row',
         alignItems: 'center',
+        marginBottom : 10
+      },
+      mailComment: {
+        fontSize : 13,
+        color: 'white',
+        fontWeight : 700,
+        paddingTop : 10,
+        paddingLeft : 1
+    },
+      textoComment :{
+        fontSize : 12,
+        color : 'white'
       }
 });
 
