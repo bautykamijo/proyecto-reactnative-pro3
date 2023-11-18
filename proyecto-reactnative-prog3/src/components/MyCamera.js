@@ -84,7 +84,7 @@ class MyCamera extends Component {
                     </TouchableOpacity>
                 </View>
                 :
-                <Text>No me diste los permisos de la camara</Text>
+                <Text style={styles.limite}>Procesando los permisos de la camara ...</Text>
                 }
             </>
         )
@@ -96,6 +96,11 @@ const styles = StyleSheet.create({
         height: `60vh`,
         widht: `100vw`,
     },
+    limite : {
+        color: 'white',
+        fontWeight : 500,
+        marginTop : 15
+      },
     camera: {
         widht: '100%',
         height: '100%',

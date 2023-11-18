@@ -60,7 +60,14 @@ class Buscador extends Component {
                 resultadosBusqueda : [],
                 error : 'Ningun resultado coincide con tu busqueda...'
             });
-        } else {
+        } 
+        else if (this.state.busqueda === ''){
+            this.setState({
+                resultadosBusqueda : [],
+                error : 'No puedes dejar este campo vacío...'
+            })
+        }
+        else {
             this.setState({
                 resultadosBusqueda : resultadosBusqueda,
                 error : ''
@@ -95,9 +102,7 @@ class Buscador extends Component {
                                 keyExtractor={(item) => item.id.toString()}
                                 renderItem={({item}) => (
                                     <View>
-                                        <TouchableOpacity 
-                                        onPress={() => this.props.navigation.navigate('ProfileUser' , {dataUsuario : item.data})}
-                                        >
+                                        <TouchableOpacity onPress={() => this.props.navigation.navigate('ProfileUser' , {dataUsuario : item.data})}>
                                             <Text style={styles.blanco}>{item.datos.owner}</Text>
                                         </TouchableOpacity>
                                     </View>

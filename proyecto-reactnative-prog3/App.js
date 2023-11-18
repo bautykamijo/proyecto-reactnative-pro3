@@ -6,6 +6,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Menu from './src/components/Menu'
 import Register from './src/screens/Register';
 import Login from './src/screens/Login';
+import ProfileUser from './src/screens/ProfileUser';
 
 const Stack = createNativeStackNavigator();
 
@@ -28,6 +29,11 @@ export default function App() {
          <Stack.Screen
         name='Menu'
         component={ Menu }
+        options={{headerShown : false}}  
+        />
+         <Stack.Screen
+        name='ProfileUser'
+        component={ ProfileUser }
         options={{headerShown : false}}  
         />
 

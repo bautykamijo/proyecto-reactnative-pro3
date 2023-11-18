@@ -87,7 +87,7 @@ class Post extends Component {
 
         return(
             <View style={styles.formContainer}>
-                <TouchableOpacity onPress={ () => this.props.navigation.navigate('User', this.props.infoPost.datos.owner)} style={styles.perfilBox}>
+                <TouchableOpacity onPress={ () => this.props.navigation.navigate('ProfileUser', {dataUsuario : this.props.infoPost.datos})} style={styles.perfilBox}>
                 <Image style={styles.fotoPerfil}  source={{uri:'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'}} resizeMode='contain'/> 
                 <Text style={styles.usuario} >{this.props.infoPost.datos.owner}</Text>
                 </TouchableOpacity>

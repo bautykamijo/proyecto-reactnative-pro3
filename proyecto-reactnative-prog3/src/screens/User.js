@@ -93,6 +93,7 @@ class User extends Component {
           <View style={styles.container}>
             {this.state.userEnUso.length > 0 ? (
               <>
+                <Text style={styles.titulo}>Tu Perfil</Text>
                 <View style={styles.flexUno}>
                   <Text style={styles.textoBlanco}>
                   <strong>Username:</strong> {this.state.userEnUso[0].user.userName} 
@@ -101,7 +102,8 @@ class User extends Component {
                   <strong>Email:</strong> {auth.currentUser.email}
                   </Text>
                   <Text style={styles.textoBlanco}><strong>Biografia:</strong> {this.state.userEnUso[0].user.biografia}</Text>
-                  <Text style={styles.textoBlancoPost}><strong>Posteos:</strong> {this.state.listaPost.length}</Text>
+                  {this.state.listaPost ?  <Text style={styles.textoBlancoPost}><strong>Posteos:</strong> {this.state.listaPost.length}</Text> :
+                  <Text style={styles.textoBlancoPost}><strong>Posteos: </strong> 0</Text>}
 
                     <Image style={styles.fotoPerfil}  source={{uri:'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'}} resizeMode='contain'/> 
                   <TouchableOpacity onPress={() => this.logout()}>
@@ -137,6 +139,14 @@ const styles = StyleSheet.create({
       backgroundColor: '#282c34',
       color : 'white'
     },
+    titulo: {
+      display : 'flex',
+      justifyContent : 'center',
+      fontWeight : 600,
+      fontSize : 30,
+      color: 'white',
+      marginBottom : 30
+      },
     textoBlanco: {
         color: 'white',
         marginBottom : 10
