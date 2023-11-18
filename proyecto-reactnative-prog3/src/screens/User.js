@@ -95,16 +95,14 @@ class User extends Component {
               <>
                 <View style={styles.flexUno}>
                   <Text style={styles.textoBlanco}>
-                    Nombre de usuario: {this.state.userEnUso[0].user.userName} <TouchableOpacity style={styles.button} onPress={() =>
-                        this.borrarPerfil()
-                      }>
-                    <FontAwesome5 name="trash" size={15} color="white" />
-                    </TouchableOpacity>
+                  <strong>Username:</strong> {this.state.userEnUso[0].user.userName} 
                   </Text>
                   <Text style={styles.textoBlanco}>
-                    Email: {auth.currentUser.email}
+                  <strong>Email:</strong> {auth.currentUser.email}
                   </Text>
-                  <Text style={styles.textoBlanco}>Mini bio: {this.state.userEnUso[0].user.biografia}</Text>
+                  <Text style={styles.textoBlanco}><strong>Biografia:</strong> {this.state.userEnUso[0].user.biografia}</Text>
+                  <Text style={styles.textoBlancoPost}><strong>Posteos:</strong> {this.state.listaPost.length}</Text>
+
                     <Image style={styles.fotoPerfil}  source={{uri:'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'}} resizeMode='contain'/> 
                   <TouchableOpacity onPress={() => this.logout()}>
                   <Text style={styles.textoBlanco}>Logout</Text>
@@ -141,7 +139,12 @@ const styles = StyleSheet.create({
     },
     textoBlanco: {
         color: 'white',
+        marginBottom : 10
         },
+        textoBlancoPost: {
+          color: 'white',
+          marginBottom : 10
+          },
       flexUno: {
         flex : 1,
         },
