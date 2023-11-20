@@ -6,11 +6,13 @@ import {
     View,
     Text,
     StyleSheet,
+    Image,
     FlatList, 
     ScrollView
   } from "react-native";
 import {auth, db} from '../firebase/config'
 import { AntDesign } from '@expo/vector-icons'; 
+import Post from '../components/Post';
 
 
 class ProfileUser extends Component {
@@ -43,7 +45,7 @@ class ProfileUser extends Component {
                     usuario.forEach( actual => {
                                     usuarioIndicado.push(
                                         {id : actual.id,
-                                        user : actual.data()})})
+                                        datos : actual.data()})})
     
                 this.setState({
                             usuario : usuarioIndicado}, () => {console.log(this.state.usuario)});
@@ -64,13 +66,13 @@ class ProfileUser extends Component {
                                         {id : onePost.id,
                                         datos : onePost.data()})})
     
-                this.setState({
-                    listaPost : postsARenderizar,
-                })
-               
-               
-                }
-            )
+                    this.setState({
+                        listaPost : postsARenderizar}, () => {console.log(this.state.listaPost)});
+
+
+            })
+                      
+                
         }
     
     
@@ -87,20 +89,30 @@ class ProfileUser extends Component {
                     <AntDesign name="arrowleft" size={24} color="white" />
                 </TouchableOpacity>
 
-            {this.state.userEnUso.length > 0 ? (
+            {this.state.usuario && this.state.usuario.length > 0 ? (
               <>
-                <Text style={styles.titulo}>Perfil de: {this.state.usuario.datos.userName}</Text>
-                <View style={styles.flexUno}>
-                  <Text style={styles.textoBlanco}>
-                  <strong>Email:</strong> {this.state.usuario.datos.owner}
-                  </Text>
-                  <Text style={styles.textoBlanco}><strong>Biografia:</strong> {this.state.usuario.datos.biografia}</Text>
-                  <Text style={styles.textoBlanco}><strong>Biografia:</strong> {this.state.userEnUso[0].user.biografia}</Text>
-                  {this.state.listaPost ?  <Text style={styles.textoBlancoPost}><strong>Posteos:</strong> {this.state.listaPost.length}</Text> :
-                  <Text style={styles.textoBlancoPost}><strong>Posteos: </strong> 0</Text>}
+              {this.state.usuario[0].datos.userName ? (  <Text style={styles.titulo}>Perfil de: {this.state.usuario[0].datos.userName} </Text> ) :
+             <Text style={styles.titulo}>Perfil de: {this.state.usuario[0].datos.owner} </Text>}
+            <View style={styles.flexUno}>
+            <Text style={styles.textoBlanco}>
+                <strong>Email:</strong> {this.state.usuario[0]?.datos?.owner || 'Correo electrónico no disponible'}
+            </Text>
+            {this.state.usuario[0].datos.biografia ?
+            <Text style={styles.textoBlanco}>
+                <strong>Biografía:</strong> {this.state.usuario[0].datos.biografia}
+            </Text> : false}
+            <Text style={styles.textoBlancoPost}>
+                <strong>Posteos:</strong> {this.state.listaPost.length || 0}
+            </Text>
+            <Image
+                style={styles.fotoPerfil}
+                source={{
+                uri: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
+                }}
+                resizeMode='contain'
+            />
+            </View>
 
-                    <Image style={styles.fotoPerfil}  source={{uri:'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'}} resizeMode='contain'/>
-                </View>
       
                 <View style={styles.flexDos}> 
                  <FlatList
@@ -133,7 +145,7 @@ class ProfileUser extends Component {
             paddingHorizontal: 10,
             paddingVertical: 6,
             marginTop: 5,
-            marginBottom : 8,
+            marginBottom : 15,
             textAlign: 'center',
             borderRadius: 4,
             borderWidth: 1,
@@ -148,7 +160,7 @@ class ProfileUser extends Component {
             display : 'flex',
             justifyContent : 'center',
             fontWeight : 600,
-            fontSize : 30,
+            fontSize : 25,
             color: 'white',
             marginBottom : 30
             },

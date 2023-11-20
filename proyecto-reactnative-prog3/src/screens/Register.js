@@ -28,6 +28,11 @@ class Register extends Component {
       }
 
     register(mail, pass, userName, biografia){
+
+        if (!userName) {
+            this.setState({ error: 'El campo de Usuario es obligatorio' });
+            return;
+        }
        
         auth.createUserWithEmailAndPassword(mail, pass)
          .then( response => {
