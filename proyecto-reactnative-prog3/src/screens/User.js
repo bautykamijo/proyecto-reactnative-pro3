@@ -67,19 +67,25 @@ class User extends Component {
 
     borrarPerfil() {
       const user = auth.currentUser;
-    
+  
+      
       deleteAuthUser(user)
         .then(() => {
-          // User deleted.
-          console.log('Usuario eliminado correctamente');
-          this.props.navigation.navigate('Login');
+          console.log('Usuario eliminado correctamente de la autenticación');
+  
+          db.collection('users').doc(user.id).delete()
+            .then(() => {
+              console.log('Datos del usuario eliminados de la colección "users"');
+              this.props.navigation.navigate('Login'); 
+            })
+            .catch((error) => {
+              console.error('Error al eliminar datos del usuario:', error);
+            });
         })
         .catch((error) => {
-          // An error ocurred
           console.error('Error al eliminar el usuario:', error);
         });
     }
-    
 
     logout() {
         auth.signOut();
@@ -93,7 +99,7 @@ class User extends Component {
           <View style={styles.container}>
             {this.state.userEnUso.length > 0 ? (
               <>
-                <Text style={styles.titulo}>Tu Perfil</Text>
+                <Text style={styles.titulo}>Tu Perfil <TouchableOpacity style={styles.button} onPress={() => this.borrarPerfil()}><FontAwesome5 name="trash" size={20} color="white" /></TouchableOpacity></Text>
                 <View style={styles.flexUno}>
                   <Text style={styles.textoBlanco}>
                   <strong>Username:</strong> {this.state.userEnUso[0].user.userName} 
@@ -161,6 +167,22 @@ const styles = StyleSheet.create({
         flexDos: {
           flex : 2
           },
+          button: {
+            backgroundColor: '#282c34',
+            paddingHorizontal: 10,
+            paddingVertical: 6,
+            marginTop: 5,
+            marginBottom : 8,
+            textAlign: 'center',
+            borderRadius: 4,
+            borderWidth: 1,
+            borderStyle: 'solid',
+            borderColor: '#282c34',
+            height : 28,
+            width: 62,
+            display : 'flex',
+            justifyContent: 'left'
+        },
           fotoPerfil : {
             height: 40,
             width: 40,

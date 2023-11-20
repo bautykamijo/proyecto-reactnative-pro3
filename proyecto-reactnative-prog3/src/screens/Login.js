@@ -49,9 +49,8 @@ class Login extends Component {
                 />
 
 
-
                 
-                {!this.state.email || !this.state.password  ? (
+                {(!this.state.email || !this.state.password)  ? (
             <TouchableOpacity style={styles.textButton} onPress={() => alert("Debe completar los campos obligatorios")}>
                 <Text style={styles.button}>Ingresar</Text>
             </TouchableOpacity>

@@ -33,6 +33,16 @@ class Register extends Component {
             this.setState({ error: 'El campo de Usuario es obligatorio' });
             return;
         }
+
+       else if (mail.includes('@') === false || mail.includes('.com') === false){
+        this.setState({ error: "El email debe contener '@' y '.com'" });
+            return;
+       }
+
+       else if (pass.length < 6){
+        this.setState({ error: "La contraseña debe tener 6 o mas caracteres." });
+            return;
+       }
        
         auth.createUserWithEmailAndPassword(mail, pass)
          .then( response => {
@@ -84,16 +94,28 @@ class Register extends Component {
                 onChangeText={ text => this.setState({password:text}) }
                 value={this.state.password} />
                
-               {!this.state.email || !this.state.password   ? (
-            <TouchableOpacity style={styles.textButton} onPress={() => alert("Debe completar los campos obligatorios")}>
-                <Text style={styles.button}>Registrarse</Text>
-            </TouchableOpacity>
+               {this.state.email.length > 0 && this.state.password.length > 0 && this.state.usuario.length > 0   ? (
+             <TouchableOpacity style={styles.textButton} onPress={ ()=>this.register(this.state.email, this.state.password, this.state.usuario, this.state.biografia )}>
+                <Text style={styles.button}>Registrarse</Text>    
+             </TouchableOpacity> 
             ) :(
-            <TouchableOpacity style={styles.textButton} onPress={()=>this.register(this.state.email, this.state.password, this.state.usuario, this.state.biografia )}>
+            <TouchableOpacity style={styles.textButton} onPress={ ()=> this.setState({error: 'Es necesario completar todos los campos'})}>
                 <Text style={styles.button}>Registrarse</Text>    
             </TouchableOpacity> 
             
             )}
+
+
+                        {this.state.error.length > 0 
+                        
+                        ? 
+                        
+                        <Text style={styles.error}>{this.state.error}</Text> 
+                    
+                        : 
+                        
+                        false }
+
 
         <TouchableOpacity onPress={ () => this.props.navigation.navigate('Login')}>
             <Text style={styles.irAlogin}>Ya tengo cuenta. Ir al login</Text>
@@ -147,6 +169,15 @@ const styles = StyleSheet.create({
         padding: 15,
         borderRadius: 5,
         alignItems: 'center',
+    },
+    error: {
+        color: 'rgb(209, 0, 0)',
+        fontSize: 15,
+        display: 'flex',
+        justifyContent: 'center',
+        marginBottom: 20,
+        marginTop : 10,
+        fontWeight : 600
     },
    irAlogin: {
         marginBottom: 10,

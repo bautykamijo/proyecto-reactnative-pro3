@@ -1,6 +1,6 @@
 // Post.js
 import React, { Component } from 'react';
-import { TextInput, TouchableOpacity, View, Text, StyleSheet, FlatList, Image, ActivityIndicator } from 'react-native';
+import { TextInput, TouchableOpacity, View, Text, StyleSheet, FlatList, Image, Alert, ActivityIndicator } from 'react-native';
 import { AntDesign } from '@expo/vector-icons'; 
 import { FontAwesome5 } from '@expo/vector-icons'; 
 import { auth, db } from '../firebase/config';
@@ -17,7 +17,8 @@ class Post extends Component {
             like: false,
             commentText: '',
             comments: [],
-            showComments: false
+            showComments: false,
+            trashear: false
         };
     }
 
@@ -39,6 +40,11 @@ class Post extends Component {
 
         console.log(auth.currentUser);
     }
+
+    
+  
+    
+    
 
 
 
@@ -80,6 +86,10 @@ class Post extends Component {
           .catch((error) => {
             console.log(error)
           })
+
+
+         
+
       }
 
 
@@ -106,15 +116,28 @@ class Post extends Component {
                 {this.props.infoPost.datos.comments ?
                 <Text style={styles.cantLikes}><strong>{this.props.infoPost.datos.likes.length}</strong> like/s y <strong>{this.props.infoPost.datos.comments.length}</strong> comentario/s</Text> : 
                 <Text style={styles.cantLikes}><strong>{this.props.infoPost.datos.likes.length}</strong> like/s y <strong>0</strong> comentario/s</Text> }
+
+
                 {auth.currentUser.email === this.props.infoPost.datos.owner && 
                     (
                     <TouchableOpacity style={styles.buttonTrash} onPress={() =>
-                        auth.currentUser.email === this.props.infoPost.datos.owner &&
-                        this.borrar(this.props.infoPost.id)
+                        auth.currentUser.email === this.props.infoPost.datos.owner && (this.setState({trashear : true}))
                       }>
                     <FontAwesome5 name="trash" size={24} color="white" />
                     </TouchableOpacity>
                     )}
+
+            {this.state.trashear === true && (
+            <View style={styles.buttonContainer}>
+                <TouchableOpacity style={styles.buttonVerde} onPress={() => this.borrar(this.props.infoPost.id)}>
+                <FontAwesome5 name="trash" size={24} color="white" />
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.buttonRojo} onPress={() => this.setState({trashear : false})}>
+                <AntDesign name="close" size={24} color="white" />
+                </TouchableOpacity>
+            </View>
+            )}
+
 
 
             </View>
@@ -168,6 +191,10 @@ const styles = StyleSheet.create({
         marginBottom : 80,
         color : 'white',  
     },
+    buttonContainer: {
+        height: `60vh`,
+        widht: `100vw`,
+    },
     cris : {
         display : 'flex',
         flexDirection : 'row',
@@ -211,6 +238,38 @@ const styles = StyleSheet.create({
         display : 'flex',
         justifyContent: 'left'
     },
+    buttonRojo: {
+        backgroundColor: "rgb(255, 0, 0)",
+        paddingHorizontal: 10,
+        paddingVertical: 6,
+        textAlign: "center",
+        display : 'flex',
+        marginBottom : 1,
+        borderRadius: 4,
+        borderWidth: 1,
+        borderStyle: 'solid',
+        borderColor: 'white',
+        justifyContent: 'center',
+        alignContent : "center",
+        alignItems : "center",
+        widht : '100%'
+      },
+      buttonVerde: {
+          backgroundColor: "rgb(18, 252, 14)",
+          paddingHorizontal: 10,
+          paddingVertical: 6,
+          textAlign: "center",
+          display : 'flex',
+          marginBottom : 1,
+          borderRadius: 4,
+          borderWidth: 1,
+          borderStyle: 'solid',
+          borderColor: 'white',
+          justifyContent: 'center',
+          alignContent : "center",
+          alignItems : "center",
+          widht : '100%'
+        },
     buttonTrash: {
         backgroundColor: '#282c34',
         paddingHorizontal: 10,
